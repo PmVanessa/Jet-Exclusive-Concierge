@@ -33,7 +33,7 @@ export default function Navbar() {
             src="/jec-logo.png"
             alt="Jet Exclusive Concierge"
             style={{
-              height: '38px',
+              height: '78px',
               width: 'auto',
               display: 'block',
               objectFit: 'contain',
@@ -42,10 +42,8 @@ export default function Navbar() {
 
           {/* Desktop links */}
           <div
-            className="nav-desktop"
+            className="hidden sm:flex items-center"
             style={{
-              display: 'flex',
-              alignItems: 'center',
               gap: '48px',
             }}
           >
@@ -70,7 +68,7 @@ export default function Navbar() {
 
           {/* Mobile hamburger */}
           <button
-            className="nav-hamburger"
+            className="flex sm:hidden flex-col items-center"
             onClick={() => setMenuOpen(!menuOpen)}
             aria-label={menuOpen ? 'Close menu' : 'Open menu'}
             style={{
@@ -78,9 +76,7 @@ export default function Navbar() {
               border: 'none',
               padding: '8px',
               cursor: 'pointer',
-              flexDirection: 'column',
               gap: '6px',
-              alignItems: 'center',
             }}
           >
             <span style={{ display: 'block', width: '24px', height: '1.5px', backgroundColor: '#FFFFFF' }} />

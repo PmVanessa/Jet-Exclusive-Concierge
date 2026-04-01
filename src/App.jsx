@@ -68,7 +68,7 @@ export default function App() {
           loop
           muted
           playsInline
-          poster=""
+          poster="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAC0lEQVQI12NgAAIABQAABjE+ibYAAAAASUVORK5CYII="
           onError={() => setVideoError(true)}
         >
           <source src="/jec-hero-video.mp4" type="video/mp4" />
