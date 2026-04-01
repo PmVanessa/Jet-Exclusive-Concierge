@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import Navbar from './components/Navbar'
 
 const SECTIONS = ['Section One', 'Section Two', 'Section Three', 'Section Four']
 
@@ -48,6 +49,8 @@ export default function App() {
 
   return (
     <>
+      <Navbar />
+
       {/* Fixed video layer */}
       {!videoError ? (
         <video className="video-hero"
