@@ -74,7 +74,6 @@ export default function Navbar() {
             onClick={() => setMenuOpen(!menuOpen)}
             aria-label={menuOpen ? 'Close menu' : 'Open menu'}
             style={{
-              display: 'none',
               background: 'none',
               border: 'none',
               padding: '8px',
@@ -128,16 +127,6 @@ export default function Navbar() {
         </div>
       )}
 
-      <style>{`
-        @media (max-width: 767px) {
-          .nav-desktop  { display: none !important; }
-          .nav-hamburger { display: flex !important; }
-        }
-        @media (min-width: 768px) {
-          .nav-desktop  { display: flex !important; }
-          .nav-hamburger { display: none !important; }
-        }
-      `}</style>
     </>
   )
 }
