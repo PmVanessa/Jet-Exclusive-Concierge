@@ -1,450 +1,243 @@
-import { motion } from 'framer-motion'
-import { Link } from 'react-router-dom'
-import ScrollIndicator from '../components/ScrollIndicator'
-import CTASection from '../components/CTASection'
+import { useEffect, useState } from 'react'
 import Footer from '../components/Footer'
 
-// Pexels direct video: luxury car arriving at night
-const VIDEO_SRC = 'https://videos.pexels.com/video-files/8344926/8344926-hd_1920_1080_25fps.mp4'
-
-const pillars = [
-  {
-    numeral: 'I',
-    title: 'Airport Protocol',
-    body: 'From the gate to your destination, handled.',
-  },
-  {
-    numeral: 'II',
-    title: 'City Movement',
-    body: 'Executive transfers across Lagos and Abuja, on your terms.',
-  },
-  {
-    numeral: 'III',
-    title: 'Event Coordination',
-    body: 'Ojude Oba. Salah. Every occasion where how you arrive matters.',
-  },
+// ── Overlay definitions per section ──────────────────────────
+const OVERLAYS = [
+  { r: 10,  g: 10,  b: 15,  opacity: 0.3  }, // section 1 — vivid
+  { r: 10,  g: 10,  b: 15,  opacity: 0.5  }, // section 2 — slightly darker
+  { r: 46,  g: 18,  b: 90,  opacity: 0.62 }, // section 3 — purple tint
+  { r: 10,  g: 10,  b: 15,  opacity: 0.85 }, // section 4 — darkest
 ]
 
-// Hero uses 0.2s stagger per spec; pillars use 0.15s (separate variants below)
-const heroContainerVariants = {
-  hidden: {},
-  show: {
-    transition: { staggerChildren: 0.20 },
-  },
+function lerp(a, b, t) { return a + (b - a) * t }
+
+// ── Section 1: Rotating text ──────────────────────────────────
+const ROTATING_LINES = [
+  'You survived the flight. Now survive the airport.',
+  '14 hours in the air. 2 hours to leave the building.',
+  'First class seat. Economy arrival.',
+  'You paid for business class and still dragged your own bag.',
+]
+
+function RotatingText() {
+  const [index, setIndex]     = useState(0)
+  const [visible, setVisible] = useState(true)
+
+  useEffect(() => {
+    let holdTimer, fadeTimer
+    holdTimer = setTimeout(() => {
+      setVisible(false)
+      fadeTimer = setTimeout(() => {
+        setIndex(i => (i + 1) % ROTATING_LINES.length)
+        setVisible(true)
+      }, 600)
+    }, 2500)
+    return () => { clearTimeout(holdTimer); clearTimeout(fadeTimer) }
+  }, [index])
+
+  return (
+    <div style={{ textAlign: 'center', padding: '0 clamp(24px, 5vw, 48px)' }}>
+      <span
+        style={{
+          display: 'block',
+          maxWidth: '820px',
+          margin: '0 auto',
+          opacity: visible ? 1 : 0,
+          transition: 'opacity 0.6s ease',
+          fontFamily: '"Cormorant Garamond", Georgia, serif',
+          fontSize: 'clamp(1.9rem, 4.5vw, 4rem)',
+          fontWeight: 400,
+          color: '#FFFFFF',
+          lineHeight: 1.25,
+        }}
+      >
+        {ROTATING_LINES[index]}
+      </span>
+    </div>
+  )
 }
 
-const containerVariants = {
-  hidden: {},
-  show: {
-    transition: { staggerChildren: 0.15 },
-  },
+// ── Shared layout helpers ─────────────────────────────────────
+const sectionBase = {
+  minHeight: '100vh',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
 }
 
-const itemVariants = {
-  hidden: { opacity: 0, y: 40 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.8, ease: 'easeOut' } },
+const innerWrap = {
+  width: '100%',
+  maxWidth: '1200px',
+  margin: '0 auto',
+  padding: 'clamp(80px, 12vh, 140px) clamp(16px, 2.5vw, 24px)',
 }
 
 export default function Home() {
+  const [overlay, setOverlay]     = useState(OVERLAYS[0])
+  const [videoError, setVideoError] = useState(false)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollY    = window.scrollY
+      const docHeight  = document.documentElement.scrollHeight - window.innerHeight
+      if (docHeight <= 0) return
+      const progress      = Math.min(scrollY / docHeight, 1)
+      const sectionFloat  = progress * (OVERLAYS.length - 1)
+      const idx           = Math.min(Math.floor(sectionFloat), OVERLAYS.length - 2)
+      const t             = sectionFloat - idx
+      const a = OVERLAYS[idx], b = OVERLAYS[idx + 1]
+      setOverlay({ r: lerp(a.r, b.r, t), g: lerp(a.g, b.g, t), b: lerp(a.b, b.b, t), opacity: lerp(a.opacity, b.opacity, t) })
+    }
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  const bgColor = `rgba(${Math.round(overlay.r)}, ${Math.round(overlay.g)}, ${Math.round(overlay.b)}, ${overlay.opacity.toFixed(3)})`
+
   return (
-    <div className="page-transition">
-      {/* ── Fixed Video Background ── */}
-      <div className="video-bg">
+    <>
+      {/* Fixed video */}
+      {!videoError ? (
         <video
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="auto"
-          aria-hidden="true"
+          className="video-hero"
+          style={{ position: 'fixed', inset: 0, width: '100%', height: '100%', objectFit: 'cover', zIndex: 0, pointerEvents: 'none' }}
+          autoPlay loop muted playsInline
+          poster="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAC0lEQVQI12NgAAIABQAABjE+ibYAAAAASUVORK5CYII="
+          onError={() => setVideoError(true)}
         >
-          <source src={VIDEO_SRC} type="video/mp4" />
+          <source src="/jec-hero-video.mp4" type="video/mp4" />
         </video>
-      </div>
+      ) : (
+        <div className="video-fallback-grain" />
+      )}
 
-      {/* ══════════════════════════════════════════════
-          Section 1 — Hero
-      ══════════════════════════════════════════════ */}
-      <section
-        style={{
-          position: 'relative',
-          zIndex: 10,
-          minHeight: '100vh',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          overflow: 'hidden',
-        }}
-      >
-        {/* 50% dark overlay */}
-        <div style={{ position: 'absolute', inset: 0, backgroundColor: 'rgba(10,10,15,0.50)', pointerEvents: 'none' }} />
+      {/* Scroll-driven overlay */}
+      <div style={{ position: 'fixed', inset: 0, zIndex: 1, pointerEvents: 'none', backgroundColor: bgColor }} />
 
-        {/* Content */}
-        <div
-          style={{
-            position: 'relative',
-            zIndex: 1,
-            textAlign: 'center',
-            padding: '0 24px',
-            maxWidth: '900px',
-          }}
-        >
-          <motion.div
-            variants={heroContainerVariants}
-            initial="hidden"
-            animate="show"
-          >
-            {/* Headline */}
-            <motion.h1 variants={itemVariants} className="hero-headline">
-              <span style={{ display: 'block' }}>You arrive.</span>
-              <span style={{ display: 'block' }}>Everything else is already handled.</span>
-            </motion.h1>
+      {/* ── Content sections ── */}
+      <div style={{ position: 'relative', zIndex: 2 }}>
 
-            {/* Subline */}
-            <motion.p variants={itemVariants} className="hero-subline">
-              Airport protocol and concierge coordination in Lagos and Abuja.
-            </motion.p>
+        {/* ── SECTION 1: THE PROBLEM ── */}
+        <section style={sectionBase}>
+          <RotatingText />
+        </section>
 
-            {/* CTA */}
-            <motion.div variants={itemVariants}>
-              <Link
-                to="/contact"
-                className="btn-primary"
-              >
-                Plan Your Arrival
-              </Link>
-            </motion.div>
-          </motion.div>
-        </div>
-
-        {/* Scroll indicator */}
-        <ScrollIndicator />
-      </section>
-
-      {/* ══════════════════════════════════════════════
-          Section 2 — Positioning Statement
-      ══════════════════════════════════════════════ */}
-      <section
-        style={{
-          position: 'relative',
-          zIndex: 10,
-          overflow: 'hidden',
-        }}
-      >
-        <div style={{ position: 'absolute', inset: 0, backgroundColor: 'rgba(10,10,15,0.75)', pointerEvents: 'none' }} />
-
-        <div
-          style={{
-            position: 'relative',
-            zIndex: 1,
-            textAlign: 'center',
-            padding: '160px 32px',
-            maxWidth: '900px',
-            margin: '0 auto',
-          }}
-          className="section-pad"
-        >
-          <motion.p
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, ease: 'easeOut' }}
-            className="positioning-text"
-            style={{
-              fontFamily: '"Cormorant Garamond", Georgia, serif',
-              fontStyle: 'italic',
-              fontWeight: 300,
-              fontSize: '52px',
-              color: '#FFFFFF',
-              lineHeight: 1.2,
-              letterSpacing: '-0.01em',
-            }}
-          >
-            JEC exists for one reason. So that by the time you land, nothing is left to chance.
-          </motion.p>
-        </div>
-      </section>
-
-      {/* ══════════════════════════════════════════════
-          Section 3 — Three Service Pillars
-      ══════════════════════════════════════════════ */}
-      <section
-        style={{
-          position: 'relative',
-          zIndex: 10,
-          overflow: 'hidden',
-        }}
-      >
-        <div style={{ position: 'absolute', inset: 0, backgroundColor: 'rgba(10,10,15,0.80)', pointerEvents: 'none' }} />
-
-        <div
-          style={{
-            position: 'relative',
-            zIndex: 1,
-            maxWidth: '1200px',
-            margin: '0 auto',
-            padding: '140px 32px',
-          }}
-          className="section-pad"
-        >
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true }}
-            className="pillars-grid"
-            style={{
-              display: 'grid',
-              gridTemplateColumns: '1fr 1fr 1fr',
-              gap: '60px',
-            }}
-          >
-            {pillars.map((pillar) => (
-              <motion.div
-                key={pillar.numeral}
-                variants={itemVariants}
-              >
-                <p
-                  style={{
-                    fontFamily: 'Inter, system-ui, sans-serif',
-                    fontSize: '11px',
-                    letterSpacing: '0.25em',
-                    textTransform: 'uppercase',
-                    color: '#a0a0b0',
-                    marginBottom: '20px',
-                  }}
-                >
-                  {pillar.numeral}
-                </p>
-                <h3
-                  style={{
-                    fontFamily: '"Cormorant Garamond", Georgia, serif',
-                    fontWeight: 400,
-                    fontSize: '36px',
-                    color: '#FFFFFF',
-                    marginBottom: '16px',
-                    lineHeight: 1.1,
-                    letterSpacing: '-0.01em',
-                  }}
-                >
-                  {pillar.title}
-                </h3>
-                <p
-                  style={{
-                    fontFamily: 'Inter, system-ui, sans-serif',
-                    fontSize: '15px',
-                    color: '#a0a0b0',
-                    lineHeight: 1.6,
-                    marginBottom: '32px',
-                  }}
-                >
-                  {pillar.body}
-                </p>
-                <div
-                  style={{
-                    width: '100%',
-                    height: '1px',
-                    backgroundColor: 'rgba(160,160,176,0.20)',
-                  }}
-                />
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-      </section>
-
-      {/* ══════════════════════════════════════════════
-          Section 4 — The Arrival Moment (split)
-      ══════════════════════════════════════════════ */}
-      <section
-        style={{
-          position: 'relative',
-          zIndex: 10,
-          overflow: 'hidden',
-          minHeight: '600px',
-        }}
-      >
-        {/* Full section overlay — only on left half via gradient */}
-        <div
-          style={{
-            position: 'absolute',
-            inset: 0,
-            background: 'linear-gradient(to right, rgba(46,18,97,0.70) 0%, rgba(46,18,97,0.70) 55%, rgba(10,10,15,0.30) 55%, rgba(10,10,15,0.30) 100%)',
-            pointerEvents: 'none',
-          }}
-          className="arrival-overlay"
-        />
-
-        <div
-          style={{
-            position: 'relative',
-            zIndex: 1,
-            maxWidth: '1200px',
-            margin: '0 auto',
-            padding: '140px 32px',
-            display: 'grid',
-            gridTemplateColumns: '1fr 1fr',
-            gap: '80px',
-            alignItems: 'center',
-          }}
-          className="arrival-grid section-pad"
-        >
-          {/* Left — text */}
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, ease: 'easeOut' }}
-          >
+        {/* ── SECTION 2: THE ANSWER ── */}
+        <section style={sectionBase}>
+          <div style={{ ...innerWrap, textAlign: 'center' }}>
             <h2
               style={{
                 fontFamily: '"Cormorant Garamond", Georgia, serif',
+                fontSize: 'clamp(2.8rem, 6vw, 6rem)',
                 fontWeight: 400,
-                fontSize: '48px',
                 color: '#FFFFFF',
                 lineHeight: 1.1,
-                marginBottom: '28px',
                 letterSpacing: '-0.01em',
+                marginBottom: 'clamp(24px, 4vh, 40px)',
               }}
-              className="arrival-headline"
             >
-              This is what sorted looks like.
+              We end that story.
             </h2>
             <p
               style={{
                 fontFamily: 'Inter, system-ui, sans-serif',
-                fontSize: '16px',
+                fontSize: 'clamp(0.95rem, 1.5vw, 1.1rem)',
+                fontWeight: 400,
                 color: '#a0a0b0',
-                lineHeight: 1.8,
-                maxWidth: '480px',
+                lineHeight: 1.75,
+                maxWidth: '860px',
+                margin: '0 auto',
               }}
-              className="arrival-body"
             >
-              No searching for your name. No negotiating with strangers. No wondering if the car will show. Just someone who already knows where you are going and has made sure everything is ready before you land.
+              From the aircraft door to the back seat of your car. Airport protocol, ground movement, and personal concierge across Lagos and Abuja. You arrive, we handle everything else.
             </p>
-          </motion.div>
+          </div>
+        </section>
 
-          {/* Right — transparent (video breathes through) */}
-          <div style={{ minHeight: '300px' }} />
-        </div>
-      </section>
-
-      {/* ══════════════════════════════════════════════
-          Section 5 — Lagos Context
-      ══════════════════════════════════════════════ */}
-      <section
-        style={{
-          position: 'relative',
-          zIndex: 10,
-          overflow: 'hidden',
-        }}
-      >
-        <div style={{ position: 'absolute', inset: 0, backgroundColor: 'rgba(10,10,15,0.65)', pointerEvents: 'none' }} />
-
-        <div
-          style={{
-            position: 'relative',
-            zIndex: 1,
-            textAlign: 'center',
-            padding: '120px 32px',
-            maxWidth: '1200px',
-            margin: '0 auto',
-          }}
-          className="section-pad"
-        >
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, ease: 'easeOut' }}
-          >
+        {/* ── SECTION 3: THE PROOF ── */}
+        <section style={sectionBase}>
+          <div style={{ ...innerWrap, textAlign: 'center' }}>
             <p
               style={{
                 fontFamily: '"Cormorant Garamond", Georgia, serif',
                 fontStyle: 'italic',
+                fontSize: 'clamp(1.15rem, 2.2vw, 1.75rem)',
                 fontWeight: 300,
-                fontSize: '40px',
                 color: '#FFFFFF',
-                marginBottom: '20px',
-                lineHeight: 1.2,
+                lineHeight: 1.8,
+                maxWidth: '860px',
+                margin: '0 auto',
               }}
-              className="lagos-text"
             >
-              Based in Lagos. Ready in Abuja.
+              I landed at Murtala Muhammed on a Sunday evening and someone from JEC met me at the aircraft door before I even stepped into the terminal. While everyone else was shuffling through immigration with their passports in the air hoping to catch somebody's attention, I walked through a fast track lane and cleared in under two minutes. I stepped outside and there was a black Mercedes V-Class waiting with the AC so cold I forgot I was in Lagos. I called my mother from the back seat and she asked what time my flight was landing because there was no way I was already on the road. I have not landed in this country without them since.
             </p>
             <p
               style={{
                 fontFamily: 'Inter, system-ui, sans-serif',
-                fontSize: '13px',
+                fontSize: '11px',
+                fontWeight: 400,
                 color: '#a0a0b0',
-                letterSpacing: '0.2em',
+                letterSpacing: '0.14em',
                 textTransform: 'uppercase',
+                marginTop: 'clamp(28px, 5vh, 48px)',
               }}
             >
-              MMIA Lagos — NAIA Abuja
+              First-time client, December 2025
             </p>
-          </motion.div>
-        </div>
-      </section>
+          </div>
+        </section>
 
-      {/* ══════════════════════════════════════════════
-          Section 6 — CTA
-      ══════════════════════════════════════════════ */}
-      <CTASection hasVideo={true} />
+        {/* ── SECTION 4: THE PUSH ── */}
+        <section style={sectionBase}>
+          <div style={{ ...innerWrap, textAlign: 'center' }}>
+            <h2
+              style={{
+                fontFamily: '"Cormorant Garamond", Georgia, serif',
+                fontSize: 'clamp(3rem, 8vw, 8rem)',
+                fontWeight: 400,
+                color: '#FFFFFF',
+                lineHeight: 1,
+                letterSpacing: '-0.01em',
+                marginBottom: 'clamp(16px, 3vh, 24px)',
+              }}
+            >
+              Mo Dé, Mo Set
+            </h2>
+            <p
+              style={{
+                fontFamily: 'Inter, system-ui, sans-serif',
+                fontSize: 'clamp(0.8rem, 1.2vw, 1rem)',
+                fontWeight: 400,
+                color: '#a0a0b0',
+                letterSpacing: '0.12em',
+                textTransform: 'uppercase',
+                marginBottom: 'clamp(36px, 6vh, 56px)',
+              }}
+            >
+              Avoid the May Rush. Travel Smart.
+            </p>
+            <button
+              style={{
+                backgroundColor: '#F02232',
+                color: '#FFFFFF',
+                fontFamily: 'Inter, system-ui, sans-serif',
+                fontSize: '12px',
+                fontWeight: 500,
+                letterSpacing: '0.2em',
+                textTransform: 'uppercase',
+                padding: '18px 52px',
+                border: 'none',
+                cursor: 'pointer',
+                display: 'inline-block',
+              }}
+            >
+              Plan Your Arrival
+            </button>
+          </div>
+        </section>
 
-      {/* Footer */}
-      <Footer />
-
-      {/* ── Responsive styles ── */}
-      <style>{`
-        .hero-headline {
-          font-family: "Cormorant Garamond", Georgia, serif;
-          font-weight: 300;
-          font-size: 96px;
-          color: #FFFFFF;
-          line-height: 1.05;
-          letter-spacing: -0.02em;
-          margin-bottom: 28px;
-        }
-        .hero-subline {
-          font-family: Inter, system-ui, sans-serif;
-          font-size: 16px;
-          color: #a0a0b0;
-          letter-spacing: 0.18em;
-          text-transform: uppercase;
-          margin-bottom: 48px;
-        }
-        .btn-primary {
-          font-family: Inter, system-ui, sans-serif;
-          font-size: 12px;
-          font-weight: 500;
-          letter-spacing: 0.2em;
-          text-transform: uppercase;
-          color: #FFFFFF;
-          background-color: #F02232;
-          text-decoration: none;
-          padding: 18px 48px;
-          display: inline-block;
-          transition: background-color 0.2s ease;
-        }
-        .btn-primary:hover { background-color: #c71b27; }
-
-        @media (max-width: 767px) {
-          .hero-headline { font-size: 56px !important; margin-bottom: 20px !important; }
-          .hero-subline { font-size: 13px !important; }
-          .section-pad { padding: 80px 24px !important; }
-          .positioning-text { font-size: 32px !important; }
-          .pillars-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
-          .arrival-grid { grid-template-columns: 1fr !important; gap: 0 !important; }
-          .arrival-overlay {
-            background: rgba(46,18,97,0.70) !important;
-          }
-          .arrival-headline { font-size: 36px !important; }
-          .arrival-body { max-width: 100% !important; }
-          .lagos-text { font-size: 28px !important; }
-        }
-      `}</style>
-    </div>
+        <Footer />
+      </div>
+    </>
   )
 }

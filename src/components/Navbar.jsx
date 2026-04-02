@@ -1,6 +1,11 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 
-const NAV_LINKS = ['Protocol', 'The Standard', 'Your Arrival']
+const NAV_LINKS = [
+  { label: 'Protocol',     to: '/protocol' },
+  { label: 'The Standard', to: '/standard' },
+  { label: 'Your Arrival', to: '/contact'  },
+]
 const SEASONS_ITEMS = ['Mo Dé, Mo Set', 'Christmas 2026']
 
 const linkStyle = {
@@ -13,12 +18,13 @@ const linkStyle = {
   cursor: 'pointer',
   userSelect: 'none',
   whiteSpace: 'nowrap',
+  textDecoration: 'none',
 }
 
 export default function Navbar() {
-  const [menuOpen, setMenuOpen]           = useState(false)
-  const [seasonsDropdown, setSeasonsDropdown] = useState(false)  // desktop hover
-  const [seasonsOpen, setSeasonsOpen]     = useState(false)      // mobile expand
+  const [menuOpen, setMenuOpen]               = useState(false)
+  const [seasonsDropdown, setSeasonsDropdown] = useState(false)
+  const [seasonsOpen, setSeasonsOpen]         = useState(false)
 
   return (
     <>
@@ -26,12 +32,14 @@ export default function Navbar() {
       <nav style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100, background: 'transparent' }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '28px 48px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
 
-          {/* Logo */}
-          <img
-            src="/jec-logo.png"
-            alt="Jet Exclusive Concierge"
-            style={{ height: '78px', width: 'auto', display: 'block', objectFit: 'contain' }}
-          />
+          {/* Logo → home */}
+          <Link to="/" style={{ display: 'block', lineHeight: 0 }}>
+            <img
+              src="/jec-logo.png"
+              alt="Jet Exclusive Concierge"
+              style={{ height: '78px', width: 'auto', display: 'block', objectFit: 'contain' }}
+            />
+          </Link>
 
           {/* Desktop links */}
           <div className="hidden sm:flex items-center" style={{ gap: '48px' }}>
@@ -79,8 +87,8 @@ export default function Navbar() {
             </div>
 
             {/* Other nav links */}
-            {NAV_LINKS.map((label) => (
-              <span key={label} style={linkStyle}>{label}</span>
+            {NAV_LINKS.map(({ label, to }) => (
+              <Link key={label} to={to} style={linkStyle}>{label}</Link>
             ))}
           </div>
 
@@ -129,14 +137,15 @@ export default function Navbar() {
           </div>
 
           {/* Main links */}
-          {NAV_LINKS.map((label) => (
-            <span
+          {NAV_LINKS.map(({ label, to }) => (
+            <Link
               key={label}
+              to={to}
               onClick={() => setMenuOpen(false)}
               style={{ ...linkStyle, fontSize: '13px', letterSpacing: '0.22em' }}
             >
               {label}
-            </span>
+            </Link>
           ))}
         </div>
       )}

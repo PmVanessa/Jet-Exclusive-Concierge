@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom'
+
 const SOCIAL_LINKS = [
   {
     label: 'Instagram',
@@ -50,7 +52,11 @@ const SOCIAL_LINKS = [
   },
 ]
 
-const NAV_LINKS = ['Protocol', 'The Standard', 'Your Arrival']
+const NAV_LINKS = [
+  { label: 'Protocol',     to: '/protocol' },
+  { label: 'The Standard', to: '/standard' },
+  { label: 'Your Arrival', to: '/contact'  },
+]
 
 const micro = {
   fontFamily: 'Inter, system-ui, sans-serif',
@@ -90,7 +96,7 @@ export default function Footer() {
           "
           style={{ minHeight: '80px', paddingTop: '20px' }}
         >
-          {/* Logo — same 78px as nav */}
+          {/* Logo */}
           <div style={{ flexShrink: 0 }}>
             <img
               src="/jec-logo.png"
@@ -137,9 +143,10 @@ export default function Footer() {
             }}
             className="hidden sm:flex"
           >
-            {NAV_LINKS.map(link => (
-              <span
-                key={link}
+            {NAV_LINKS.map(({ label, to }) => (
+              <Link
+                key={label}
+                to={to}
                 style={{
                   fontFamily: 'Inter, system-ui, sans-serif',
                   fontSize: '11px',
@@ -147,14 +154,15 @@ export default function Footer() {
                   color: '#FFFFFF',
                   letterSpacing: '0.06em',
                   whiteSpace: 'nowrap',
+                  textDecoration: 'none',
                 }}
               >
-                {link}
-              </span>
+                {label}
+              </Link>
             ))}
           </div>
 
-          {/* Social icons — icons only */}
+          {/* Social icons */}
           <div
             style={{
               display: 'flex',
