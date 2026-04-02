@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import Footer from '../components/Footer'
 
 const SERVICES = [
@@ -42,6 +42,7 @@ const SERVICES = [
 
 export default function Protocol() {
   const [videoError, setVideoError] = useState(false)
+  const navigate = useNavigate()
 
   return (
     <>
@@ -98,26 +99,30 @@ export default function Protocol() {
         >
           <h1
             style={{
-              fontFamily: '"Cormorant Garamond", Georgia, serif',
-              fontWeight: 400,
-              fontSize: 'clamp(4rem, 10vw, 9rem)',
+              fontFamily: '"Playfair Display", Georgia, serif',
+              fontWeight: 900,
+              fontSize: 'clamp(3.5rem, 10vw, 8rem)',
               color: '#FFFFFF',
               lineHeight: 0.95,
               letterSpacing: '-0.02em',
               marginBottom: 'clamp(20px, 3vh, 32px)',
+              textShadow: '0 2px 20px rgba(0,0,0,0.8), 0 0 40px rgba(0,0,0,0.5)',
             }}
           >
             Protocol
           </h1>
           <p
             style={{
-              fontFamily: 'Inter, system-ui, sans-serif',
-              fontSize: 'clamp(0.9rem, 1.4vw, 1rem)',
-              fontWeight: 400,
-              color: '#a0a0b0',
-              lineHeight: 1.75,
+              fontFamily: "'Nunito Sans', system-ui, sans-serif",
+              fontSize: '18px',
+              fontWeight: 500,
+              color: '#FFFFFF',
+              lineHeight: 2.2,
+              letterSpacing: '0.5px',
               maxWidth: '680px',
-              margin: 0,
+              marginTop: '2rem',
+              marginBottom: 0,
+              textShadow: '0 2px 20px rgba(0,0,0,0.8), 0 0 40px rgba(0,0,0,0.5)',
             }}
           >
             Everything between the aircraft door and your front door, handled.
@@ -150,25 +155,29 @@ export default function Protocol() {
               >
                 <h2
                   style={{
-                    fontFamily: '"Cormorant Garamond", Georgia, serif',
-                    fontWeight: 400,
-                    fontSize: 'clamp(1.6rem, 3.5vw, 2.4rem)',
+                    fontFamily: '"Playfair Display", Georgia, serif',
+                    fontWeight: 900,
+                    fontSize: 'clamp(1.5rem, 3vw, 2.2rem)',
                     color: '#FFFFFF',
                     lineHeight: 1.1,
                     margin: 0,
+                    textShadow: '0 2px 20px rgba(0,0,0,0.8), 0 0 40px rgba(0,0,0,0.5)',
                   }}
                 >
                   {service.name}
                 </h2>
                 <p
                   style={{
-                    fontFamily: 'Inter, system-ui, sans-serif',
-                    fontSize: 'clamp(0.88rem, 1.3vw, 0.95rem)',
-                    fontWeight: 400,
-                    color: '#a0a0b0',
-                    lineHeight: 1.8,
+                    fontFamily: "'Nunito Sans', system-ui, sans-serif",
+                    fontSize: '18px',
+                    fontWeight: 500,
+                    color: '#FFFFFF',
+                    lineHeight: 2.2,
+                    letterSpacing: '0.5px',
                     maxWidth: '680px',
-                    margin: 0,
+                    marginTop: '2rem',
+                    marginBottom: 0,
+                    textShadow: '0 2px 20px rgba(0,0,0,0.8), 0 0 40px rgba(0,0,0,0.5)',
                   }}
                 >
                   {service.description}
@@ -190,34 +199,36 @@ export default function Protocol() {
           <div style={{ borderTop: '1px solid rgba(255,255,255,0.08)', marginBottom: 'clamp(48px, 8vh, 80px)' }} />
           <h2
             style={{
-              fontFamily: '"Cormorant Garamond", Georgia, serif',
-              fontWeight: 400,
-              fontSize: 'clamp(2.4rem, 6vw, 5.5rem)',
+              fontFamily: '"Playfair Display", Georgia, serif',
+              fontWeight: 900,
+              fontSize: 'clamp(1.8rem, 4vw, 3.5rem)',
               color: '#FFFFFF',
-              lineHeight: 1.05,
+              lineHeight: 1.1,
               letterSpacing: '-0.01em',
               marginBottom: 'clamp(28px, 5vh, 48px)',
+              textShadow: '0 2px 20px rgba(0,0,0,0.8), 0 0 40px rgba(0,0,0,0.5)',
             }}
           >
             Ready to arrive differently?
           </h2>
-          <Link
-            to="/contact"
+          <button
+            onClick={() => navigate('/', { state: { scrollToForm: true } })}
             style={{
               display: 'inline-block',
               backgroundColor: '#F02232',
               color: '#FFFFFF',
-              fontFamily: 'Inter, system-ui, sans-serif',
+              fontFamily: "'Nunito Sans', system-ui, sans-serif",
               fontSize: '12px',
               fontWeight: 500,
               letterSpacing: '0.2em',
               textTransform: 'uppercase',
               padding: '18px 52px',
-              textDecoration: 'none',
+              border: 'none',
+              cursor: 'pointer',
             }}
           >
-            Plan Your Arrival
-          </Link>
+            Book Now
+          </button>
         </section>
 
         <Footer />

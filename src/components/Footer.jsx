@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 
 const SOCIAL_LINKS = [
   {
@@ -53,20 +53,32 @@ const SOCIAL_LINKS = [
 ]
 
 const NAV_LINKS = [
-  { label: 'Protocol',     to: '/protocol' },
-  { label: 'Your Arrival', to: '/contact'  },
+  { label: 'Seasons',  to: null        }, // dropdown only — no route yet
+  { label: 'Protocol', to: '/protocol' },
+  { label: 'Book Now', to: null        }, // scrolls to form — handled by parent
 ]
 
 const micro = {
-  fontFamily: 'Inter, system-ui, sans-serif',
-  fontSize: '11px',
-  fontWeight: 400,
+  fontFamily: "'Nunito Sans', system-ui, sans-serif",
+  fontSize: '12px',
+  fontWeight: 500,
   color: '#a0a0b0',
-  letterSpacing: '0.04em',
-  lineHeight: 1.6,
+  letterSpacing: '0.5px',
+  lineHeight: 2,
 }
 
 export default function Footer() {
+  const navigate = useNavigate()
+  const location = useLocation()
+
+  const handleBookNow = () => {
+    if (location.pathname === '/') {
+      document.getElementById('book-now')?.scrollIntoView({ behavior: 'smooth' })
+    } else {
+      navigate('/', { state: { scrollToForm: true } })
+    }
+  }
+
   return (
     <footer
       style={{
@@ -142,23 +154,28 @@ export default function Footer() {
             }}
             className="hidden sm:flex"
           >
-            {NAV_LINKS.map(({ label, to }) => (
-              <Link
-                key={label}
-                to={to}
-                style={{
-                  fontFamily: 'Inter, system-ui, sans-serif',
-                  fontSize: '11px',
-                  fontWeight: 400,
-                  color: '#FFFFFF',
-                  letterSpacing: '0.06em',
-                  whiteSpace: 'nowrap',
-                  textDecoration: 'none',
-                }}
-              >
-                {label}
-              </Link>
-            ))}
+            {NAV_LINKS.map(({ label, to }) => {
+              const sharedStyle = {
+                fontFamily: "'Nunito Sans', system-ui, sans-serif",
+                fontSize: '12px',
+                fontWeight: 500,
+                color: '#FFFFFF',
+                letterSpacing: '0.5px',
+                whiteSpace: 'nowrap',
+                textDecoration: 'none',
+                background: 'none',
+                border: 'none',
+                padding: 0,
+                cursor: 'pointer',
+              }
+              if (label === 'Book Now') {
+                return <button key={label} onClick={handleBookNow} style={sharedStyle}>{label}</button>
+              }
+              if (to) {
+                return <Link key={label} to={to} style={sharedStyle}>{label}</Link>
+              }
+              return <span key={label} style={{ ...sharedStyle, cursor: 'default' }}>{label}</span>
+            })}
           </div>
 
           {/* Social icons */}
@@ -197,7 +214,7 @@ export default function Footer() {
       >
         <span
           style={{
-            fontFamily: 'Inter, system-ui, sans-serif',
+            fontFamily: "'Nunito Sans', system-ui, sans-serif",
             fontSize: '10px',
             fontWeight: 400,
             color: '#a0a0b0',

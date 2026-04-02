@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react'
+import { useLocation } from 'react-router-dom'
 import Footer from '../components/Footer'
 import EnquiryForm from '../components/EnquiryForm'
 
 // ── Overlay definitions per section ──────────────────────────
 const OVERLAYS = [
-  { r: 10, g: 10, b: 15, opacity: 0.3  }, // section 1 — vivid
-  { r: 10, g: 10, b: 15, opacity: 0.5  }, // section 2 — slightly darker
+  { r: 10, g: 10, b: 15, opacity: 0.5  }, // section 1 — readable
+  { r: 10, g: 10, b: 15, opacity: 0.25 }, // section 2 — light, text pops
   { r: 10, g: 10, b: 15, opacity: 0.85 }, // form — darkest
 ]
 
@@ -44,11 +45,13 @@ function RotatingText() {
           margin: '0 auto',
           opacity: visible ? 1 : 0,
           transition: 'opacity 0.6s ease',
-          fontFamily: '"Cormorant Garamond", Georgia, serif',
-          fontSize: 'clamp(1.9rem, 4.5vw, 4rem)',
-          fontWeight: 400,
+          fontFamily: '"Playfair Display", Georgia, serif',
+          fontSize: 'clamp(1.8rem, 4vw, 3.5rem)',
+          fontWeight: 900,
           color: '#FFFFFF',
           lineHeight: 1.25,
+          letterSpacing: '0.5px',
+          textShadow: '0 2px 20px rgba(0,0,0,0.8), 0 0 40px rgba(0,0,0,0.5)',
         }}
       >
         {ROTATING_LINES[index]}
@@ -73,8 +76,17 @@ const innerWrap = {
 }
 
 export default function Home() {
-  const [overlay, setOverlay]     = useState(OVERLAYS[0])
+  const [overlay, setOverlay]       = useState(OVERLAYS[0])
   const [videoError, setVideoError] = useState(false)
+  const location                    = useLocation()
+
+  // Scroll to form when arriving from another page via "Book Now"
+  useEffect(() => {
+    if (location.state?.scrollToForm) {
+      const el = document.getElementById('book-now')
+      if (el) setTimeout(() => el.scrollIntoView({ behavior: 'smooth' }), 120)
+    }
+  }, [location.state])
 
   useEffect(() => {
     const handleScroll = () => {
@@ -127,26 +139,29 @@ export default function Home() {
           <div style={{ ...innerWrap, textAlign: 'center' }}>
             <h2
               style={{
-                fontFamily: '"Cormorant Garamond", Georgia, serif',
-                fontSize: 'clamp(2.8rem, 6vw, 6rem)',
-                fontWeight: 400,
+                fontFamily: '"Playfair Display", Georgia, serif',
+                fontSize: 'clamp(1.8rem, 4vw, 3.5rem)',
+                fontWeight: 900,
                 color: '#FFFFFF',
-                lineHeight: 1.1,
+                lineHeight: 1.15,
                 letterSpacing: '-0.01em',
-                marginBottom: 'clamp(24px, 4vh, 40px)',
+                marginBottom: '2rem',
+                textShadow: '0 2px 20px rgba(0,0,0,0.8), 0 0 40px rgba(0,0,0,0.5)',
               }}
             >
               We end that story.
             </h2>
             <p
               style={{
-                fontFamily: 'Inter, system-ui, sans-serif',
-                fontSize: 'clamp(0.95rem, 1.5vw, 1.1rem)',
-                fontWeight: 400,
-                color: '#a0a0b0',
-                lineHeight: 1.75,
+                fontFamily: "'Nunito Sans', system-ui, sans-serif",
+                fontSize: '18px',
+                fontWeight: 500,
+                color: '#FFFFFF',
+                lineHeight: 2.2,
+                letterSpacing: '0.5px',
                 maxWidth: '860px',
                 margin: '0 auto',
+                textShadow: '0 2px 20px rgba(0,0,0,0.8), 0 0 40px rgba(0,0,0,0.5)',
               }}
             >
               From the aircraft door to the back seat of your car. Airport protocol, ground movement, and personal concierge across Lagos and Abuja. You arrive, we handle everything else.
@@ -154,7 +169,7 @@ export default function Home() {
           </div>
         </section>
 
-        <EnquiryForm />
+        <div id="book-now"><EnquiryForm /></div>
         <Footer />
       </div>
     </>

@@ -1,16 +1,12 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 
-const NAV_LINKS = [
-  { label: 'Protocol',     to: '/protocol' },
-  { label: 'Your Arrival', to: '/contact'  },
-]
 const SEASONS_ITEMS = ['Mo Dé, Mo Set', 'Christmas 2026']
 
 const linkStyle = {
-  fontFamily: 'Inter, system-ui, sans-serif',
+  fontFamily: "'Nunito Sans', system-ui, sans-serif",
   fontSize: '12px',
-  fontWeight: 400,
+  fontWeight: 500,
   letterSpacing: '0.18em',
   textTransform: 'uppercase',
   color: '#FFFFFF',
@@ -24,6 +20,18 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen]               = useState(false)
   const [seasonsDropdown, setSeasonsDropdown] = useState(false)
   const [seasonsOpen, setSeasonsOpen]         = useState(false)
+
+  const navigate  = useNavigate()
+  const location  = useLocation()
+
+  const handleBookNow = () => {
+    setMenuOpen(false)
+    if (location.pathname === '/') {
+      document.getElementById('book-now')?.scrollIntoView({ behavior: 'smooth' })
+    } else {
+      navigate('/', { state: { scrollToForm: true } })
+    }
+  }
 
   return (
     <>
@@ -66,7 +74,7 @@ export default function Navbar() {
                     <div
                       key={item}
                       style={{
-                        fontFamily: 'Inter, system-ui, sans-serif',
+                        fontFamily: "'Nunito Sans', system-ui, sans-serif",
                         fontSize: '11px',
                         fontWeight: 400,
                         letterSpacing: '0.14em',
@@ -85,10 +93,13 @@ export default function Navbar() {
               )}
             </div>
 
-            {/* Other nav links */}
-            {NAV_LINKS.map(({ label, to }) => (
-              <Link key={label} to={to} style={linkStyle}>{label}</Link>
-            ))}
+            {/* Protocol */}
+            <Link to="/protocol" style={linkStyle}>Protocol</Link>
+
+            {/* Book Now — scroll to form */}
+            <button onClick={handleBookNow} style={{ ...linkStyle, background: 'none', border: 'none', padding: 0 }}>
+              Book Now
+            </button>
           </div>
 
           {/* Mobile hamburger */}
@@ -135,17 +146,22 @@ export default function Navbar() {
             ))}
           </div>
 
-          {/* Main links */}
-          {NAV_LINKS.map(({ label, to }) => (
-            <Link
-              key={label}
-              to={to}
-              onClick={() => setMenuOpen(false)}
-              style={{ ...linkStyle, fontSize: '13px', letterSpacing: '0.22em' }}
-            >
-              {label}
-            </Link>
-          ))}
+          {/* Protocol */}
+          <Link
+            to="/protocol"
+            onClick={() => setMenuOpen(false)}
+            style={{ ...linkStyle, fontSize: '13px', letterSpacing: '0.22em' }}
+          >
+            Protocol
+          </Link>
+
+          {/* Book Now */}
+          <button
+            onClick={handleBookNow}
+            style={{ ...linkStyle, fontSize: '13px', letterSpacing: '0.22em', background: 'none', border: 'none', padding: 0 }}
+          >
+            Book Now
+          </button>
         </div>
       )}
     </>

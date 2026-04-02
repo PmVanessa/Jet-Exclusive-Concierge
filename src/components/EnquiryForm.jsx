@@ -40,9 +40,9 @@ const inputBase = {
   backgroundColor: '#0a0a0f',
   color: '#FFFFFF',
   border: '1px solid rgba(160, 160, 176, 0.35)',
-  fontFamily: 'Inter, system-ui, sans-serif',
-  fontSize: '14px',
-  fontWeight: 400,
+  fontFamily: "'Nunito Sans', system-ui, sans-serif",
+  fontSize: '18px',
+  fontWeight: 500,
   padding: '14px 16px',
   outline: 'none',
   boxSizing: 'border-box',
@@ -53,24 +53,24 @@ const inputBase = {
 
 const labelStyle = {
   display: 'block',
-  fontFamily: 'Inter, system-ui, sans-serif',
-  fontSize: '11px',
-  fontWeight: 400,
-  letterSpacing: '0.12em',
+  fontFamily: "'Nunito Sans', system-ui, sans-serif",
+  fontSize: '14px',
+  fontWeight: 600,
+  letterSpacing: '1px',
   textTransform: 'uppercase',
   color: '#a0a0b0',
-  marginBottom: '8px',
+  marginBottom: '10px',
 }
 
 const errorStyle = {
-  fontFamily: 'Inter, system-ui, sans-serif',
-  fontSize: '11px',
+  fontFamily: "'Nunito Sans', system-ui, sans-serif",
+  fontSize: '12px',
   color: '#F02232',
   marginTop: '6px',
   display: 'block',
 }
 
-const fieldWrap = { marginBottom: '28px' }
+const fieldWrap = { marginBottom: '2rem' }
 
 export default function EnquiryForm() {
   const [submitted, setSubmitted] = useState(false)
@@ -127,9 +127,9 @@ export default function EnquiryForm() {
           <div style={{ textAlign: 'center', padding: '40px 0' }}>
             <h2
               style={{
-                fontFamily: '"Cormorant Garamond", Georgia, serif',
-                fontWeight: 400,
-                fontSize: 'clamp(2.4rem, 6vw, 4.5rem)',
+                fontFamily: '"Playfair Display", Georgia, serif',
+                fontWeight: 900,
+                fontSize: 'clamp(1.8rem, 4vw, 3.5rem)',
                 color: '#FFFFFF',
                 lineHeight: 1.05,
                 marginBottom: '28px',
@@ -139,9 +139,9 @@ export default function EnquiryForm() {
             </h2>
             <p
               style={{
-                fontFamily: 'Inter, system-ui, sans-serif',
-                fontSize: 'clamp(0.9rem, 1.4vw, 1rem)',
-                fontWeight: 400,
+                fontFamily: "'Nunito Sans', system-ui, sans-serif",
+                fontSize: '18px',
+                fontWeight: 500,
                 color: '#FFFFFF',
                 lineHeight: 1.8,
                 maxWidth: '560px',
@@ -156,23 +156,26 @@ export default function EnquiryForm() {
             {/* ── Heading ── */}
             <h2
               style={{
-                fontFamily: '"Cormorant Garamond", Georgia, serif',
-                fontWeight: 400,
-                fontSize: 'clamp(2.4rem, 6vw, 4.5rem)',
+                fontFamily: '"Playfair Display", Georgia, serif',
+                fontWeight: 900,
+                fontSize: 'clamp(1.8rem, 4vw, 3.5rem)',
                 color: '#FFFFFF',
                 lineHeight: 1.05,
-                marginBottom: '16px',
+                marginBottom: '2rem',
               }}
             >
               Your Arrival Starts Here
             </h2>
             <p
               style={{
-                fontFamily: 'Inter, system-ui, sans-serif',
-                fontSize: 'clamp(0.88rem, 1.3vw, 0.95rem)',
-                color: '#a0a0b0',
-                lineHeight: 1.75,
+                fontFamily: "'Nunito Sans', system-ui, sans-serif",
+                fontSize: '18px',
+                fontWeight: 500,
+                color: '#FFFFFF',
+                lineHeight: 2.2,
+                letterSpacing: '0.5px',
                 marginBottom: 'clamp(40px, 6vh, 60px)',
+                textShadow: '0 2px 20px rgba(0,0,0,0.8), 0 0 40px rgba(0,0,0,0.5)',
               }}
             >
               Tell us what you need and we will take it from here.
@@ -239,7 +242,7 @@ export default function EnquiryForm() {
               </div>
 
               {/* Dates row */}
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', marginBottom: '28px' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', marginBottom: '2rem' }}>
                 <div>
                   <label style={labelStyle}>Arrival Date</label>
                   <input
@@ -272,9 +275,11 @@ export default function EnquiryForm() {
                             alignItems: 'center',
                             gap: '12px',
                             cursor: 'pointer',
-                            fontFamily: 'Inter, system-ui, sans-serif',
-                            fontSize: '14px',
-                            color: checked ? '#FFFFFF' : '#a0a0b0',
+                            fontFamily: "'Nunito Sans', system-ui, sans-serif",
+                            fontSize: '16px',
+                            fontWeight: 500,
+                            letterSpacing: '0.5px',
+                            color: '#FFFFFF',
                             userSelect: 'none',
                           }}
                         >
@@ -357,7 +362,7 @@ export default function EnquiryForm() {
                 style={{
                   backgroundColor: submitting ? '#a0a0b0' : '#F02232',
                   color: '#FFFFFF',
-                  fontFamily: 'Inter, system-ui, sans-serif',
+                  fontFamily: "'Nunito Sans', system-ui, sans-serif",
                   fontSize: '12px',
                   fontWeight: 500,
                   letterSpacing: '0.2em',

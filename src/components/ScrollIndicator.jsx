@@ -46,7 +46,7 @@ export default function ScrollIndicator() {
       </div>
       <span
         style={{
-          fontFamily: 'Inter, system-ui, sans-serif',
+          fontFamily: "'Nunito Sans', system-ui, sans-serif",
           fontSize: '9px',
           letterSpacing: '0.2em',
           color: 'rgba(255,255,255,0.4)',

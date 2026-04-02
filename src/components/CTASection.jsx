@@ -39,9 +39,9 @@ export default function CTASection({ hasVideo = true }) {
         >
           <h2
             style={{
-              fontFamily: '"Cormorant Garamond", Georgia, serif',
-              fontWeight: 300,
-              fontSize: '56px',
+              fontFamily: '"Playfair Display", Georgia, serif',
+              fontWeight: 900,
+              fontSize: 'clamp(1.8rem, 4vw, 3.5rem)',
               color: '#FFFFFF',
               lineHeight: 1.05,
               marginBottom: '20px',
@@ -54,7 +54,7 @@ export default function CTASection({ hasVideo = true }) {
 
           <p
             style={{
-              fontFamily: 'Inter, system-ui, sans-serif',
+              fontFamily: "'Nunito Sans', system-ui, sans-serif",
               fontSize: '15px',
               color: '#a0a0b0',
               letterSpacing: '0.02em',
@@ -67,7 +67,7 @@ export default function CTASection({ hasVideo = true }) {
           <Link
             to="/contact"
             style={{
-              fontFamily: 'Inter, system-ui, sans-serif',
+              fontFamily: "'Nunito Sans', system-ui, sans-serif",
               fontSize: '12px',
               fontWeight: 500,
               letterSpacing: '0.2em',
