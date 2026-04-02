@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 
 const SOCIAL_LINKS = [
@@ -52,8 +53,13 @@ const SOCIAL_LINKS = [
   },
 ]
 
+const SEASONS_ITEMS = [
+  { label: 'Mo Dé, Mo Set',   to: '/modemoset'     },
+  { label: 'Christmas 2026',  to: '/christmas-2026' },
+]
+
 const NAV_LINKS = [
-  { label: 'Seasons',  to: null        }, // dropdown only — no route yet
+  { label: 'Seasons',  dropdown: true  },
   { label: 'Protocol', to: '/protocol' },
   { label: 'Book Now', to: null        }, // scrolls to form — handled by parent
 ]
@@ -70,6 +76,7 @@ const micro = {
 export default function Footer() {
   const navigate = useNavigate()
   const location = useLocation()
+  const [seasonsOpen, setSeasonsOpen] = useState(false)
 
   const handleBookNow = () => {
     if (location.pathname === '/') {
@@ -140,7 +147,7 @@ export default function Footer() {
             >
               hello@jetexclusiveconcierge.com
             </a>
-            <span style={{ ...micro, display: 'block' }}>Lagos. Abuja.</span>
+            <span style={{ ...micro, display: 'block' }}>Nigeria.</span>
           </div>
 
           {/* Nav links — horizontal */}
@@ -154,7 +161,7 @@ export default function Footer() {
             }}
             className="hidden sm:flex"
           >
-            {NAV_LINKS.map(({ label, to }) => {
+            {NAV_LINKS.map(({ label, to, dropdown }) => {
               const sharedStyle = {
                 fontFamily: "'Nunito Sans', system-ui, sans-serif",
                 fontSize: '12px',
@@ -167,6 +174,59 @@ export default function Footer() {
                 border: 'none',
                 padding: 0,
                 cursor: 'pointer',
+              }
+              if (dropdown) {
+                return (
+                  <div
+                    key={label}
+                    style={{ position: 'relative' }}
+                    onMouseEnter={() => setSeasonsOpen(true)}
+                    onMouseLeave={() => setSeasonsOpen(false)}
+                  >
+                    <span style={{ ...sharedStyle, cursor: 'default' }}>{label}</span>
+                    {seasonsOpen && (
+                      <div
+                        style={{
+                          position: 'absolute',
+                          bottom: '100%',
+                          left: 0,
+                          paddingBottom: '8px',
+                          zIndex: 100,
+                        }}
+                      >
+                        <div
+                          style={{
+                            backgroundColor: 'rgba(10, 10, 15, 0.95)',
+                            border: '1px solid rgba(255,255,255,0.08)',
+                            padding: '8px 0',
+                            minWidth: '160px',
+                          }}
+                        >
+                          {SEASONS_ITEMS.map(({ label: itemLabel, to: itemTo }) => (
+                            <Link
+                              key={itemLabel}
+                              to={itemTo}
+                              onClick={() => setSeasonsOpen(false)}
+                              style={{
+                                display: 'block',
+                                padding: '8px 16px',
+                                fontFamily: "'Nunito Sans', system-ui, sans-serif",
+                                fontSize: '12px',
+                                fontWeight: 500,
+                                color: '#FFFFFF',
+                                letterSpacing: '0.5px',
+                                textDecoration: 'none',
+                                whiteSpace: 'nowrap',
+                              }}
+                            >
+                              {itemLabel}
+                            </Link>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )
               }
               if (label === 'Book Now') {
                 return <button key={label} onClick={handleBookNow} style={sharedStyle}>{label}</button>

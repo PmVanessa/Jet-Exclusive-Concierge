@@ -1,7 +1,10 @@
 import { useState } from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 
-const SEASONS_ITEMS = ['Mo Dé, Mo Set', 'Christmas 2026']
+const SEASONS_ITEMS = [
+  { label: 'Mo Dé, Mo Set',  to: '/modemoset'      },
+  { label: 'Christmas 2026', to: '/christmas-2026' },
+]
 
 const linkStyle = {
   fontFamily: "'Nunito Sans', system-ui, sans-serif",
@@ -70,13 +73,16 @@ export default function Navbar() {
                   zIndex: 200,
                   paddingTop: '20px',
                 }}>
-                  {SEASONS_ITEMS.map((item) => (
-                    <div
-                      key={item}
+                  {SEASONS_ITEMS.map(({ label, to }) => (
+                    <Link
+                      key={label}
+                      to={to}
+                      onClick={() => setSeasonsDropdown(false)}
                       style={{
+                        display: 'block',
                         fontFamily: "'Nunito Sans', system-ui, sans-serif",
                         fontSize: '11px',
-                        fontWeight: 400,
+                        fontWeight: 500,
                         letterSpacing: '0.14em',
                         textTransform: 'uppercase',
                         color: '#FFFFFF',
@@ -84,10 +90,11 @@ export default function Navbar() {
                         cursor: 'pointer',
                         userSelect: 'none',
                         borderBottom: '1px solid rgba(255,255,255,0.06)',
+                        textDecoration: 'none',
                       }}
                     >
-                      {item}
-                    </div>
+                      {label}
+                    </Link>
                   ))}
                 </div>
               )}
@@ -135,14 +142,15 @@ export default function Navbar() {
             >
               Seasons {seasonsOpen ? '−' : '+'}
             </span>
-            {seasonsOpen && SEASONS_ITEMS.map((item) => (
-              <span
-                key={item}
+            {seasonsOpen && SEASONS_ITEMS.map(({ label, to }) => (
+              <Link
+                key={label}
+                to={to}
                 onClick={() => setMenuOpen(false)}
                 style={{ ...linkStyle, fontSize: '11px', letterSpacing: '0.14em', color: '#a0a0b0' }}
               >
-                {item}
-              </span>
+                {label}
+              </Link>
             ))}
           </div>
 
