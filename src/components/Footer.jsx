@@ -116,11 +116,13 @@ export default function Footer() {
         >
           {/* Logo */}
           <div style={{ flexShrink: 0 }}>
-            <img
-              src="/jec-logo.png"
-              alt="Jet Exclusive Concierge"
-              style={{ height: '78px', width: 'auto', display: 'block', objectFit: 'contain' }}
-            />
+            <Link to="/">
+              <img
+                src="/jec-logo.png"
+                alt="Jet Exclusive Concierge"
+                style={{ height: '78px', width: 'auto', display: 'block', objectFit: 'contain' }}
+              />
+            </Link>
           </div>
 
           {/* Tagline */}
