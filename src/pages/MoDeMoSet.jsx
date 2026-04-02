@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Footer from '../components/Footer'
+import PageMeta from '../components/PageMeta'
 
 const SHADOW = '0 2px 20px rgba(0,0,0,0.8), 0 0 40px rgba(0,0,0,0.5)'
 
@@ -111,6 +112,10 @@ export default function MoDeMoSet() {
 
   return (
     <>
+      <PageMeta
+        title="Mo Dé, Mo Set | Eid & Ojude Oba Travel Packages 2026 | Jet Exclusive Concierge"
+        description="Flying into Nigeria for Eid or Ojude Oba? Book airport fast track, transfers, and concierge services before the May rush."
+      />
       {/* ── Fixed video ── */}
       {!videoError ? (
         <video

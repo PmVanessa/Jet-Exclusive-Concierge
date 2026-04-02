@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import Footer from '../components/Footer'
 import EnquiryForm from '../components/EnquiryForm'
+import PageMeta from '../components/PageMeta'
 
 // ── Overlay definitions per section ──────────────────────────
 const OVERLAYS = [
@@ -108,6 +109,10 @@ export default function Home() {
 
   return (
     <>
+      <PageMeta
+        title="Jet Exclusive Concierge | VIP Airport Service & Fast Track in Lagos and Abuja"
+        description="Skip the airport queues. Fast track immigration, private transfers, and personal concierge across Lagos and Abuja. From the aircraft door to your front door."
+      />
       {/* Fixed video */}
       {!videoError ? (
         <video

@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import Footer from '../components/Footer'
+import PageMeta from '../components/PageMeta'
 
 const SHADOW = '0 2px 20px rgba(0,0,0,0.8), 0 0 40px rgba(0,0,0,0.5)'
 
@@ -8,6 +9,10 @@ export default function Christmas2026() {
 
   return (
     <>
+      <PageMeta
+        title="Christmas 2026 Travel Packages | Jet Exclusive Concierge"
+        description="Executive mobility for the festive season in Nigeria. Coming soon."
+      />
       {/* Fixed video world */}
       {!videoFailed && (
         <video

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Footer from '../components/Footer'
+import PageMeta from '../components/PageMeta'
 
 const SERVICES = [
   {
@@ -46,6 +47,10 @@ export default function Protocol() {
 
   return (
     <>
+      <PageMeta
+        title="VIP Airport Protocol & Executive Rides | Jet Exclusive Concierge"
+        description="Fast track immigration, airport pickup, lounge access, in-city rides, and tailored VIP services in Lagos and Abuja."
+      />
       {/* ── Fixed background video ── */}
       {!videoError ? (
         <video
