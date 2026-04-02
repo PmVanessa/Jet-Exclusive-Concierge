@@ -1,68 +1,86 @@
 import { useState } from 'react'
 
 const NAV_LINKS = ['Protocol', 'The Standard', 'Your Arrival']
+const SEASONS_ITEMS = ['Mo Dé, Mo Set', 'Christmas 2026']
+
+const linkStyle = {
+  fontFamily: 'Inter, system-ui, sans-serif',
+  fontSize: '12px',
+  fontWeight: 400,
+  letterSpacing: '0.18em',
+  textTransform: 'uppercase',
+  color: '#FFFFFF',
+  cursor: 'pointer',
+  userSelect: 'none',
+  whiteSpace: 'nowrap',
+}
 
 export default function Navbar() {
-  const [menuOpen, setMenuOpen] = useState(false)
+  const [menuOpen, setMenuOpen]           = useState(false)
+  const [seasonsDropdown, setSeasonsDropdown] = useState(false)  // desktop hover
+  const [seasonsOpen, setSeasonsOpen]     = useState(false)      // mobile expand
 
   return (
     <>
       {/* ── Fixed nav bar ── */}
-      <nav
-        style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          right: 0,
-          zIndex: 100,
-          background: 'transparent',
-        }}
-      >
-        <div
-          style={{
-            maxWidth: '1200px',
-            margin: '0 auto',
-            padding: '28px 48px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-          }}
-        >
-          {/* Logo — always visible including on mobile */}
+      <nav style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100, background: 'transparent' }}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '28px 48px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+
+          {/* Logo */}
           <img
             src="/jec-logo.png"
             alt="Jet Exclusive Concierge"
-            style={{
-              height: '78px',
-              width: 'auto',
-              display: 'block',
-              objectFit: 'contain',
-            }}
+            style={{ height: '78px', width: 'auto', display: 'block', objectFit: 'contain' }}
           />
 
           {/* Desktop links */}
-          <div
-            className="hidden sm:flex items-center"
-            style={{
-              gap: '48px',
-            }}
-          >
+          <div className="hidden sm:flex items-center" style={{ gap: '48px' }}>
+
+            {/* Seasons dropdown */}
+            <div
+              style={{ position: 'relative' }}
+              onMouseEnter={() => setSeasonsDropdown(true)}
+              onMouseLeave={() => setSeasonsDropdown(false)}
+            >
+              <span style={linkStyle}>Seasons</span>
+
+              {seasonsDropdown && (
+                <div style={{
+                  position: 'absolute',
+                  top: '100%',
+                  left: '50%',
+                  transform: 'translateX(-50%)',
+                  backgroundColor: 'rgba(10, 10, 15, 0.95)',
+                  minWidth: '200px',
+                  zIndex: 200,
+                  paddingTop: '20px',
+                }}>
+                  {SEASONS_ITEMS.map((item) => (
+                    <div
+                      key={item}
+                      style={{
+                        fontFamily: 'Inter, system-ui, sans-serif',
+                        fontSize: '11px',
+                        fontWeight: 400,
+                        letterSpacing: '0.14em',
+                        textTransform: 'uppercase',
+                        color: '#FFFFFF',
+                        padding: '14px 20px',
+                        cursor: 'pointer',
+                        userSelect: 'none',
+                        borderBottom: '1px solid rgba(255,255,255,0.06)',
+                      }}
+                    >
+                      {item}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Other nav links */}
             {NAV_LINKS.map((label) => (
-              <span
-                key={label}
-                style={{
-                  fontFamily: 'Inter, system-ui, sans-serif',
-                  fontSize: '12px',
-                  fontWeight: 400,
-                  letterSpacing: '0.18em',
-                  textTransform: 'uppercase',
-                  color: '#FFFFFF',
-                  cursor: 'pointer',
-                  userSelect: 'none',
-                }}
-              >
-                {label}
-              </span>
+              <span key={label} style={linkStyle}>{label}</span>
             ))}
           </div>
 
@@ -71,13 +89,7 @@ export default function Navbar() {
             className="flex sm:hidden flex-col items-center"
             onClick={() => setMenuOpen(!menuOpen)}
             aria-label={menuOpen ? 'Close menu' : 'Open menu'}
-            style={{
-              background: 'none',
-              border: 'none',
-              padding: '8px',
-              cursor: 'pointer',
-              gap: '6px',
-            }}
+            style={{ background: 'none', border: 'none', padding: '8px', cursor: 'pointer', gap: '6px' }}
           >
             <span style={{ display: 'block', width: '24px', height: '1.5px', backgroundColor: '#FFFFFF' }} />
             <span style={{ display: 'block', width: '24px', height: '1.5px', backgroundColor: '#FFFFFF' }} />
@@ -86,43 +98,48 @@ export default function Navbar() {
         </div>
       </nav>
 
-      {/* ── Mobile full-screen overlay (sits below nav so logo + hamburger stay visible) ── */}
+      {/* ── Mobile full-screen overlay ── */}
       {menuOpen && (
         <div
           style={{
-            position: 'fixed',
-            inset: 0,
-            zIndex: 99,
+            position: 'fixed', inset: 0, zIndex: 99,
             backgroundColor: 'rgba(10, 10, 15, 0.95)',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: '52px',
+            display: 'flex', flexDirection: 'column', alignItems: 'center',
+            justifyContent: 'center', gap: '40px', paddingTop: '95px',
           }}
-          onClick={() => setMenuOpen(false)}
+          onClick={(e) => { if (e.target === e.currentTarget) setMenuOpen(false) }}
         >
+          {/* Seasons collapsible */}
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '20px' }}>
+            <span
+              onClick={() => setSeasonsOpen(!seasonsOpen)}
+              style={{ ...linkStyle, fontSize: '13px', letterSpacing: '0.22em' }}
+            >
+              Seasons {seasonsOpen ? '−' : '+'}
+            </span>
+            {seasonsOpen && SEASONS_ITEMS.map((item) => (
+              <span
+                key={item}
+                onClick={() => setMenuOpen(false)}
+                style={{ ...linkStyle, fontSize: '11px', letterSpacing: '0.14em', color: '#a0a0b0' }}
+              >
+                {item}
+              </span>
+            ))}
+          </div>
+
+          {/* Main links */}
           {NAV_LINKS.map((label) => (
             <span
               key={label}
               onClick={() => setMenuOpen(false)}
-              style={{
-                fontFamily: 'Inter, system-ui, sans-serif',
-                fontSize: '13px',
-                fontWeight: 400,
-                letterSpacing: '0.22em',
-                textTransform: 'uppercase',
-                color: '#FFFFFF',
-                cursor: 'pointer',
-                userSelect: 'none',
-              }}
+              style={{ ...linkStyle, fontSize: '13px', letterSpacing: '0.22em' }}
             >
               {label}
             </span>
           ))}
         </div>
       )}
-
     </>
   )
 }

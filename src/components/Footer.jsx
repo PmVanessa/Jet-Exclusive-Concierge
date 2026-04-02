@@ -1,197 +1,205 @@
-import { Link } from 'react-router-dom'
-import {
-  FaInstagram,
-  FaTiktok,
-  FaFacebook,
-  FaXTwitter,
-  FaLinkedinIn,
-} from 'react-icons/fa6'
-
-const navLinks = [
-  { label: 'Protocol', to: '/protocol' },
-  { label: 'The Standard', to: '/standard' },
-  { label: 'Your Arrival', to: '/contact' },
-]
-
-const socialLinks = [
+const SOCIAL_LINKS = [
   {
-    Icon: FaInstagram,
-    href: 'https://www.instagram.com/jetexclusiveconcierge',
     label: 'Instagram',
+    href: 'https://instagram.com/jetexclusiveconcierge',
+    icon: (
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square" strokeLinejoin="miter">
+        <rect x="2" y="2" width="20" height="20" />
+        <circle cx="12" cy="12" r="5" />
+        <rect x="16.5" y="5" width="2" height="2" fill="currentColor" stroke="none" />
+      </svg>
+    ),
   },
   {
-    Icon: FaTiktok,
-    href: 'https://www.tiktok.com/@jetexclusiveconcierge',
     label: 'TikTok',
+    href: 'https://tiktok.com/@jetexclusiveconcierge',
+    icon: (
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.75a8.18 8.18 0 004.78 1.52V6.82a4.85 4.85 0 01-1.01-.13z" />
+      </svg>
+    ),
   },
   {
-    Icon: FaFacebook,
-    href: 'https://www.facebook.com/jetexclusiveconcierge',
     label: 'Facebook',
+    href: 'https://facebook.com/jetexclusiveconcierge',
+    icon: (
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z" />
+      </svg>
+    ),
   },
   {
-    Icon: FaXTwitter,
+    label: 'Twitter / X',
     href: 'https://x.com/jetexclusiveltd',
-    label: 'X / Twitter',
+    icon: (
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.835L1.254 2.25H8.08l4.259 5.631L18.244 2.25zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77z" />
+      </svg>
+    ),
   },
   {
-    Icon: FaLinkedinIn,
-    href: 'https://www.linkedin.com/company/jetexclusiveconcierge',
     label: 'LinkedIn',
+    href: 'https://linkedin.com/company/jetexclusiveconcierge',
+    icon: (
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-4 0v7h-4v-7a6 6 0 016-6z" />
+        <rect x="2" y="9" width="4" height="12" />
+        <circle cx="4" cy="4" r="2" />
+      </svg>
+    ),
   },
 ]
+
+const NAV_LINKS = ['Protocol', 'The Standard', 'Your Arrival']
+
+const micro = {
+  fontFamily: 'Inter, system-ui, sans-serif',
+  fontSize: '11px',
+  fontWeight: 400,
+  color: '#a0a0b0',
+  letterSpacing: '0.04em',
+  lineHeight: 1.6,
+}
 
 export default function Footer() {
   return (
     <footer
       style={{
         backgroundColor: '#0a0a0f',
-        borderTop: '1px solid rgba(255,255,255,0.08)',
+        borderTop: '1px solid rgba(255,255,255,0.06)',
         position: 'relative',
-        zIndex: 10,
+        zIndex: 2,
       }}
     >
+      {/* ── Main strip ── */}
       <div
         style={{
           maxWidth: '1200px',
           margin: '0 auto',
-          padding: '64px 32px 48px',
+          padding: '0 clamp(16px, 2.5vw, 24px)',
         }}
       >
-        {/* Three columns */}
+        {/* Desktop: single row | Mobile: stacked */}
         <div
-          className="footer-grid"
-          style={{
-            display: 'grid',
-            gridTemplateColumns: '1fr 1fr 1fr',
-            gap: '48px',
-            alignItems: 'start',
-            marginBottom: '48px',
-          }}
+          className="
+            flex flex-col sm:flex-row
+            items-start sm:items-center
+            gap-5 sm:gap-0
+            sm:justify-between
+            py-6 sm:py-0
+          "
+          style={{ minHeight: '80px', paddingTop: '20px' }}
         >
-          {/* Left — Brand */}
-          <div>
-            <Link
-              to="/"
-              style={{
-                fontFamily: '"Cormorant Garamond", Georgia, serif',
-                fontStyle: 'italic',
-                fontWeight: 400,
-                fontSize: '32px',
-                color: '#FFFFFF',
-                textDecoration: 'none',
-                letterSpacing: '0.1em',
-                display: 'block',
-                marginBottom: '8px',
-              }}
-            >
-              JEC
-            </Link>
-            <p
-              style={{
-                fontFamily: 'Inter, system-ui, sans-serif',
-                fontSize: '12px',
-                color: '#a0a0b0',
-                letterSpacing: '0.05em',
-              }}
-            >
-              Jet Exclusive Concierge
-            </p>
+          {/* Logo — same 78px as nav */}
+          <div style={{ flexShrink: 0 }}>
+            <img
+              src="/jec-logo.png"
+              alt="Jet Exclusive Concierge"
+              style={{ height: '78px', width: 'auto', display: 'block', objectFit: 'contain' }}
+            />
           </div>
 
-          {/* Centre — Nav links */}
+          {/* Tagline */}
+          <p
+            style={{
+              ...micro,
+              maxWidth: '180px',
+              flexShrink: 0,
+              marginLeft: 'clamp(12px, 2vw, 28px)',
+            }}
+            className="hidden sm:block"
+          >
+            Airport protocol and executive mobility across Nigeria
+          </p>
+
+          {/* Centre — contact */}
+          <div
+            style={{ flexShrink: 0, marginLeft: 'auto', marginRight: 'auto', textAlign: 'center' }}
+            className="sm:block"
+          >
+            <a
+              href="mailto:hello@jetexclusiveconcierge.com"
+              style={{ ...micro, display: 'block', textDecoration: 'none' }}
+            >
+              hello@jetexclusiveconcierge.com
+            </a>
+            <span style={{ ...micro, display: 'block' }}>Lagos. Abuja.</span>
+          </div>
+
+          {/* Nav links — horizontal */}
           <div
             style={{
               display: 'flex',
-              flexDirection: 'column',
-              gap: '16px',
+              alignItems: 'center',
+              gap: '20px',
+              flexShrink: 0,
+              marginLeft: 'clamp(12px, 2vw, 28px)',
             }}
+            className="hidden sm:flex"
           >
-            {navLinks.map((link) => (
-              <Link
-                key={link.to}
-                to={link.to}
+            {NAV_LINKS.map(link => (
+              <span
+                key={link}
                 style={{
                   fontFamily: 'Inter, system-ui, sans-serif',
-                  fontSize: '12px',
-                  color: '#a0a0b0',
-                  textDecoration: 'none',
-                  letterSpacing: '0.08em',
-                  transition: 'color 0.2s ease',
+                  fontSize: '11px',
+                  fontWeight: 400,
+                  color: '#FFFFFF',
+                  letterSpacing: '0.06em',
+                  whiteSpace: 'nowrap',
                 }}
-                onMouseEnter={(e) => { e.currentTarget.style.color = '#FFFFFF' }}
-                onMouseLeave={(e) => { e.currentTarget.style.color = '#a0a0b0' }}
               >
-                {link.label}
-              </Link>
+                {link}
+              </span>
             ))}
           </div>
 
-          {/* Right — Social icons */}
+          {/* Social icons — icons only */}
           <div
             style={{
               display: 'flex',
-              flexDirection: 'row',
-              gap: '20px',
               alignItems: 'center',
-              justifyContent: 'flex-end',
+              gap: '16px',
+              flexShrink: 0,
+              marginLeft: 'clamp(12px, 2vw, 28px)',
             }}
           >
-            {socialLinks.map(({ Icon, href, label }) => (
+            {SOCIAL_LINKS.map(({ label, href, icon }) => (
               <a
-                key={href}
+                key={label}
                 href={href}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={label}
-                style={{
-                  color: '#a0a0b0',
-                  transition: 'color 0.2s ease',
-                  display: 'flex',
-                  alignItems: 'center',
-                }}
-                onMouseEnter={(e) => { e.currentTarget.style.color = '#FFFFFF' }}
-                onMouseLeave={(e) => { e.currentTarget.style.color = '#a0a0b0' }}
+                style={{ color: '#a0a0b0', display: 'block', lineHeight: 0 }}
               >
-                <Icon size={18} />
+                {icon}
               </a>
             ))}
           </div>
         </div>
-
-        {/* Bottom line */}
-        <div
-          style={{
-            borderTop: '1px solid rgba(255,255,255,0.06)',
-            paddingTop: '24px',
-            textAlign: 'center',
-          }}
-        >
-          <p
-            style={{
-              fontFamily: 'Inter, system-ui, sans-serif',
-              fontSize: '11px',
-              color: '#a0a0b0',
-              letterSpacing: '0.06em',
-            }}
-          >
-            © 2025 Jet Exclusive Concierge. All rights reserved.
-          </p>
-        </div>
       </div>
 
-      {/* Responsive */}
-      <style>{`
-        @media (max-width: 767px) {
-          .footer-grid {
-            grid-template-columns: 1fr !important;
-            gap: 36px !important;
-          }
-          .footer-grid > div:last-child {
-            justify-content: flex-start !important;
-          }
-        }
-      `}</style>
+      {/* ── Copyright ── */}
+      <div
+        style={{
+          borderTop: '1px solid rgba(255,255,255,0.04)',
+          textAlign: 'center',
+          padding: '10px 24px',
+        }}
+      >
+        <span
+          style={{
+            fontFamily: 'Inter, system-ui, sans-serif',
+            fontSize: '10px',
+            fontWeight: 400,
+            color: '#a0a0b0',
+            letterSpacing: '0.06em',
+          }}
+        >
+          © 2026 Jet Exclusive Concierge. All rights reserved.
+        </span>
+      </div>
     </footer>
   )
 }
