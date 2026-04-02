@@ -1,8 +1,7 @@
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 
-// ── Replace with your real Formspree ID when ready ──
-const FORMSPREE_ENDPOINT = 'https://formspree.io/f/YOUR_FORM_ID'
+const FORMSPREE_ENDPOINT = 'https://formspree.io/f/mojpnyvo'
 
 const SERVICES = [
   'Fast Track Immigration',
@@ -75,6 +74,7 @@ const fieldWrap = { marginBottom: '2rem' }
 export default function EnquiryForm() {
   const [submitted, setSubmitted] = useState(false)
   const [submitting, setSubmitting] = useState(false)
+  const [submitError, setSubmitError] = useState(false)
   const [selectedServices, setSelectedServices] = useState([])
 
   const {
@@ -95,16 +95,32 @@ export default function EnquiryForm() {
 
   const onSubmit = async (data) => {
     setSubmitting(true)
+    setSubmitError(false)
     try {
-      const payload = { ...data, services: selectedServices }
-      await fetch(FORMSPREE_ENDPOINT, {
+      const payload = {
+        'Full Name':       data.fullName,
+        'Email':           data.email,
+        'Phone Number':    data.phone,
+        'Location':        data.location || '',
+        'Arrival Date':    data.arrivalDate || '',
+        'Departure Date':  data.departureDate || '',
+        'Services Needed': selectedServices.join(', '),
+        'Other Service':   data.otherService || '',
+        'How They Heard':  data.howHeard || '',
+        "Friend's Name":   data.friendName || '',
+      }
+      const res = await fetch(FORMSPREE_ENDPOINT, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
         body: JSON.stringify(payload),
       })
-      setSubmitted(true)
+      if (res.ok) {
+        setSubmitted(true)
+      } else {
+        setSubmitError(true)
+      }
     } catch {
-      setSubmitted(true)
+      setSubmitError(true)
     } finally {
       setSubmitting(false)
     }
@@ -124,7 +140,7 @@ export default function EnquiryForm() {
 
         {submitted ? (
           /* ── Success state ── */
-          <div style={{ textAlign: 'center', padding: '40px 0' }}>
+          <div style={{ textAlign: 'center', padding: 'clamp(80px, 14vh, 140px) 0' }}>
             <h2
               style={{
                 fontFamily: '"Playfair Display", Georgia, serif',
@@ -132,7 +148,7 @@ export default function EnquiryForm() {
                 fontSize: 'clamp(1.8rem, 4vw, 3.5rem)',
                 color: '#FFFFFF',
                 lineHeight: 1.05,
-                marginBottom: '28px',
+                marginBottom: '2rem',
               }}
             >
               Your Arrival Starts Here
@@ -354,6 +370,20 @@ export default function EnquiryForm() {
                   </div>
                 )}
               </div>
+
+              {/* Submission error */}
+              {submitError && (
+                <p style={{
+                  fontFamily: "'Nunito Sans', system-ui, sans-serif",
+                  fontSize: '14px',
+                  fontWeight: 500,
+                  color: '#F02232',
+                  marginBottom: '1.5rem',
+                  letterSpacing: '0.3px',
+                }}>
+                  Something went wrong. Please check your connection and try again.
+                </p>
+              )}
 
               {/* Submit */}
               <button
