@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react'
 import Footer from '../components/Footer'
+import EnquiryForm from '../components/EnquiryForm'
 
 // ── Overlay definitions per section ──────────────────────────
 const OVERLAYS = [
-  { r: 10,  g: 10,  b: 15,  opacity: 0.3  }, // section 1 — vivid
-  { r: 10,  g: 10,  b: 15,  opacity: 0.5  }, // section 2 — slightly darker
-  { r: 46,  g: 18,  b: 90,  opacity: 0.62 }, // section 3 — purple tint
-  { r: 10,  g: 10,  b: 15,  opacity: 0.85 }, // section 4 — darkest
+  { r: 10, g: 10, b: 15, opacity: 0.3  }, // section 1 — vivid
+  { r: 10, g: 10, b: 15, opacity: 0.5  }, // section 2 — slightly darker
+  { r: 10, g: 10, b: 15, opacity: 0.85 }, // form — darkest
 ]
 
 function lerp(a, b, t) { return a + (b - a) * t }
@@ -154,88 +154,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ── SECTION 3: THE PROOF ── */}
-        <section style={sectionBase}>
-          <div style={{ ...innerWrap, textAlign: 'center' }}>
-            <p
-              style={{
-                fontFamily: '"Cormorant Garamond", Georgia, serif',
-                fontStyle: 'italic',
-                fontSize: 'clamp(1.15rem, 2.2vw, 1.75rem)',
-                fontWeight: 300,
-                color: '#FFFFFF',
-                lineHeight: 1.8,
-                maxWidth: '860px',
-                margin: '0 auto',
-              }}
-            >
-              I landed at Murtala Muhammed on a Sunday evening and someone from JEC met me at the aircraft door before I even stepped into the terminal. While everyone else was shuffling through immigration with their passports in the air hoping to catch somebody's attention, I walked through a fast track lane and cleared in under two minutes. I stepped outside and there was a black Mercedes V-Class waiting with the AC so cold I forgot I was in Lagos. I called my mother from the back seat and she asked what time my flight was landing because there was no way I was already on the road. I have not landed in this country without them since.
-            </p>
-            <p
-              style={{
-                fontFamily: 'Inter, system-ui, sans-serif',
-                fontSize: '11px',
-                fontWeight: 400,
-                color: '#a0a0b0',
-                letterSpacing: '0.14em',
-                textTransform: 'uppercase',
-                marginTop: 'clamp(28px, 5vh, 48px)',
-              }}
-            >
-              First-time client, December 2025
-            </p>
-          </div>
-        </section>
-
-        {/* ── SECTION 4: THE PUSH ── */}
-        <section style={sectionBase}>
-          <div style={{ ...innerWrap, textAlign: 'center' }}>
-            <h2
-              style={{
-                fontFamily: '"Cormorant Garamond", Georgia, serif',
-                fontSize: 'clamp(3rem, 8vw, 8rem)',
-                fontWeight: 400,
-                color: '#FFFFFF',
-                lineHeight: 1,
-                letterSpacing: '-0.01em',
-                marginBottom: 'clamp(16px, 3vh, 24px)',
-              }}
-            >
-              Mo Dé, Mo Set
-            </h2>
-            <p
-              style={{
-                fontFamily: 'Inter, system-ui, sans-serif',
-                fontSize: 'clamp(0.8rem, 1.2vw, 1rem)',
-                fontWeight: 400,
-                color: '#a0a0b0',
-                letterSpacing: '0.12em',
-                textTransform: 'uppercase',
-                marginBottom: 'clamp(36px, 6vh, 56px)',
-              }}
-            >
-              Avoid the May Rush. Travel Smart.
-            </p>
-            <button
-              style={{
-                backgroundColor: '#F02232',
-                color: '#FFFFFF',
-                fontFamily: 'Inter, system-ui, sans-serif',
-                fontSize: '12px',
-                fontWeight: 500,
-                letterSpacing: '0.2em',
-                textTransform: 'uppercase',
-                padding: '18px 52px',
-                border: 'none',
-                cursor: 'pointer',
-                display: 'inline-block',
-              }}
-            >
-              Plan Your Arrival
-            </button>
-          </div>
-        </section>
-
+        <EnquiryForm />
         <Footer />
       </div>
     </>

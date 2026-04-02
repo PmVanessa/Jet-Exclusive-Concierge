@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 
 const NAV_LINKS = [
   { label: 'Protocol',     to: '/protocol' },
-  { label: 'The Standard', to: '/standard' },
   { label: 'Your Arrival', to: '/contact'  },
 ]
 const SEASONS_ITEMS = ['Mo Dé, Mo Set', 'Christmas 2026']

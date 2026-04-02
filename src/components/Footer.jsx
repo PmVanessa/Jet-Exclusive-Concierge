@@ -54,7 +54,6 @@ const SOCIAL_LINKS = [
 
 const NAV_LINKS = [
   { label: 'Protocol',     to: '/protocol' },
-  { label: 'The Standard', to: '/standard' },
   { label: 'Your Arrival', to: '/contact'  },
 ]
 
