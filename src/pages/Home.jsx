@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import Footer from '../components/Footer'
@@ -54,56 +54,87 @@ function RotatingText() {
 }
 
 // ── Section 2: Massive scrolling text ────────────────────────
+const SCROLL_TEXT = "First class doesn't stop at the gate."
+
 function HorizontalSection() {
   const wrapperRef = useRef(null)
-  const textRef    = useRef(null)
+  const measureRef = useRef(null)   // lives OUTSIDE overflow:hidden — gives true width
+  const [textW, setTextW] = useState(0)
+  const [vw,    setVw]    = useState(typeof window !== 'undefined' ? window.innerWidth : 1440)
+
+  useLayoutEffect(() => {
+    function measure() {
+      if (!measureRef.current) return
+      setTextW(measureRef.current.offsetWidth)
+      setVw(window.innerWidth)
+    }
+    // Wait for Playfair Display to load so glyph widths are accurate
+    ;(document.fonts?.ready ?? Promise.resolve()).then(measure)
+    window.addEventListener('resize', measure)
+    return () => window.removeEventListener('resize', measure)
+  }, [])
+
+  const startX    = vw * 0.7                   // text begins partially visible on the right
+  const endX      = -(textW - vw * 0.05)       // last glyphs just clear the left edge
+  const totalMove = Math.max(startX - endX, 1)
+  // wrapper height = scrollable distance + 1 viewport (the sticky panel itself)
+  // 1.5× gives a comfortable scroll pace
+  const wrapperH  = `${totalMove * 1.5 + vw}px`
 
   const { scrollYProgress } = useScroll({
     target: wrapperRef,
     offset: ['start start', 'end end'],
   })
 
-  // Custom transform: measures actual text width so the slide is exact
-  const x = useTransform(scrollYProgress, (progress) => {
-    const vw = window.innerWidth / 100
-    const textWidth = textRef.current ? textRef.current.scrollWidth : vw * 800
-    // Start: text begins at 70vw (partially visible on right)
-    // End: last characters just leaving the left edge
-    const startPx = vw * 70
-    const endPx   = -(textWidth - vw * 5)
-    return startPx + (endPx - startPx) * progress
-  })
+  const x = useTransform(scrollYProgress, [0, 1], [startX, endX])
+
+  const textStyle = {
+    fontFamily: '"Playfair Display", Georgia, serif',
+    fontSize:   '15vw',
+    fontWeight: 900,
+    lineHeight: 1,
+    whiteSpace: 'nowrap',
+    textShadow: SHADOW,
+  }
 
   return (
-    <div ref={wrapperRef} style={{ height: '300vh', position: 'relative' }}>
-      <div style={{
-        position: 'sticky',
-        top: 0,
-        height: '100vh',
-        overflow: 'hidden',
-        backgroundColor: 'rgba(46, 18, 97, 0.1)',
-        display: 'flex',
-        alignItems: 'center',
-      }}>
-        <motion.div style={{ x, display: 'inline-block', whiteSpace: 'nowrap' }}>
-          <span
-            ref={textRef}
-            style={{
-              fontFamily: '"Playfair Display", Georgia, serif',
-              fontSize: '15vw',
-              fontWeight: 900,
-              color: '#FFFFFF',
-              lineHeight: 1,
-              whiteSpace: 'nowrap',
-              textShadow: SHADOW,
-              display: 'inline',
-            }}
-          >
-            We end that story. From the aircraft door to your front door and everything in between.
-          </span>
-        </motion.div>
+    <>
+      {/* ── Hidden clone for measuring true text width ── */}
+      <div
+        ref={measureRef}
+        aria-hidden="true"
+        style={{
+          ...textStyle,
+          position:      'fixed',
+          top:           '-300vh',
+          left:          0,
+          visibility:    'hidden',
+          pointerEvents: 'none',
+          color:         'transparent',
+        }}
+      >
+        {SCROLL_TEXT}
       </div>
-    </div>
+
+      {/* ── Scrollable wrapper ── */}
+      <div ref={wrapperRef} style={{ height: textW ? wrapperH : '600vh', position: 'relative' }}>
+        <div style={{
+          position:        'sticky',
+          top:             0,
+          height:          '100vh',
+          overflow:        'hidden',
+          backgroundColor: 'rgba(46, 18, 97, 0.1)',
+          display:         'flex',
+          alignItems:      'center',
+        }}>
+          <motion.div style={{ x, willChange: 'transform', display: 'inline-block', whiteSpace: 'nowrap' }}>
+            <span style={{ ...textStyle, color: '#FFFFFF', display: 'inline' }}>
+              {SCROLL_TEXT}
+            </span>
+          </motion.div>
+        </div>
+      </div>
+    </>
   )
 }
 
