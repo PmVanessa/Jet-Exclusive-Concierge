@@ -76,7 +76,7 @@ export default function Summer2026() {
         <video autoPlay muted loop playsInline onError={() => setVideoFailed(true)}
           style={{ position: 'fixed', inset: 0, width: '100%', height: '100%', objectFit: 'cover', zIndex: 0 }}
         >
-          <source src="/jec-hero-video.mp4" type="video/mp4" />
+          <source src="/jec-summer-video.mp4" type="video/mp4" />
         </video>
       )}
 
