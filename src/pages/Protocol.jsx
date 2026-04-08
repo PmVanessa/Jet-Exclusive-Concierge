@@ -67,7 +67,7 @@ export default function Protocol() {
           loop
           muted
           playsInline
-          poster="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAC0lEQVQI12NgAAIABQAABjE+ibYAAAAASUVORK5CYII="
+          poster="/jec-protocol-poster.jpg"
           onError={() => setVideoError(true)}
         >
           <source src="/jec-protocol-video.mp4" type="video/mp4" />
@@ -99,7 +99,7 @@ export default function Protocol() {
             justifyContent: 'flex-end',
             maxWidth: '1200px',
             margin: '0 auto',
-            padding: 'clamp(120px, 18vh, 200px) clamp(16px, 2.5vw, 24px) clamp(48px, 8vh, 80px)',
+            padding: 'clamp(160px, 22vh, 240px) clamp(16px, 2.5vw, 24px) clamp(48px, 8vh, 80px)',
           }}
         >
           <h1

@@ -75,7 +75,7 @@ export default function Summer2026() {
       />
 
       {!videoFailed && (
-        <video autoPlay muted loop playsInline onError={() => setVideoFailed(true)}
+        <video autoPlay muted loop playsInline poster="/jec-summer-poster.jpg" onError={() => setVideoFailed(true)}
           style={{ position: 'fixed', inset: 0, width: '100%', height: '100%', objectFit: 'cover', zIndex: 0 }}
         >
           <source src="/jec-summer-video.mp4" type="video/mp4" />

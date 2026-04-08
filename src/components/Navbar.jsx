@@ -104,8 +104,8 @@ export default function Navbar() {
             {/* Protocol */}
             <Link to="/protocol" style={linkStyle} className="nav-link">Protocol</Link>
 
-            {/* Book Now — scroll to form */}
-            <button onClick={handleBookNow} style={{ ...linkStyle, background: 'none', border: 'none', padding: 0 }} className="nav-book">
+            {/* Book Now — CTA */}
+            <button onClick={handleBookNow} className="nav-cta">
               Book Now
             </button>
           </div>
@@ -165,10 +165,7 @@ export default function Navbar() {
           </Link>
 
           {/* Book Now */}
-          <button
-            onClick={handleBookNow}
-            style={{ ...linkStyle, fontSize: '13px', letterSpacing: '0.22em', background: 'none', border: 'none', padding: 0 }}
-          >
+          <button onClick={handleBookNow} className="nav-cta">
             Book Now
           </button>
         </div>

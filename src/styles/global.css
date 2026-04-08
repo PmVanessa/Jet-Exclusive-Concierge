@@ -224,16 +224,40 @@ input:focus, select:focus, textarea:focus {
 
 /* ─── Navbar link hover ──────────────────────────────────── */
 .nav-link {
-  transition: opacity 0.22s ease;
+  position: relative;
 }
-.nav-link:hover {
-  opacity: 0.55;
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.6);
+  transition: width 0.3s ease;
 }
-.nav-book {
-  transition: color 0.22s ease, opacity 0.22s ease;
+.nav-link:hover::after {
+  width: 100%;
 }
-.nav-book:hover {
-  opacity: 0.55;
+
+/* ─── Navbar CTA button ──────────────────────────────────── */
+.nav-cta {
+  background-color: #F02232;
+  color: #FFFFFF !important;
+  padding: 11px 28px;
+  font-family: 'Nunito Sans', system-ui, sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.22s ease;
+  white-space: nowrap;
+  text-decoration: none;
+}
+.nav-cta:hover {
+  background-color: #c41c28;
 }
 
 /* ─── Form input focus ───────────────────────────────────── */

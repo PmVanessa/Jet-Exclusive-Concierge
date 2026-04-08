@@ -77,7 +77,7 @@ export default function Christmas2026() {
       />
 
       {!videoFailed && (
-        <video autoPlay muted loop playsInline onError={() => setVideoFailed(true)}
+        <video autoPlay muted loop playsInline poster="/jec-christmas-poster.jpg" onError={() => setVideoFailed(true)}
           style={{ position: 'fixed', inset: 0, width: '100%', height: '100%', objectFit: 'cover', zIndex: 0 }}
         >
           <source src="/jec-christmas-video.mp4" type="video/mp4" />

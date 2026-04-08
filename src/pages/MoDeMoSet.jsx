@@ -126,7 +126,7 @@ export default function MoDeMoSet() {
             pointerEvents: 'none',
           }}
           autoPlay loop muted playsInline
-          poster="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAC0lEQVQI12NgAAIABQAABjE+ibYAAAAASUVORK5CYII="
+          poster="/jec-modemoset-poster.jpg"
           onError={() => setVideoError(true)}
         >
           <source src="/jec-modemoset-video.mp4" type="video/mp4" />

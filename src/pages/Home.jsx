@@ -103,6 +103,7 @@ function HorizontalSection() {
     lineHeight: 1,
     whiteSpace: 'nowrap',
     textShadow: SHADOW,
+    wordSpacing: '0.18em',
   }
 
   return (
@@ -192,7 +193,7 @@ export default function Home() {
           className="video-hero"
           style={{ position: 'fixed', inset: 0, width: '100%', height: '100%', objectFit: 'cover', zIndex: 0, pointerEvents: 'none' }}
           autoPlay loop muted playsInline
-          poster="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAC0lEQVQI12NgAAIABQAABjE+ibYAAAAASUVORK5CYII="
+          poster="/jec-hero-poster.jpg"
           onError={() => setVideoError(true)}
         >
           <source src="/jec-hero-video.mp4" type="video/mp4" />
