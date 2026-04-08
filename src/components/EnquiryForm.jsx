@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 
-const FORMSPREE_ENDPOINT = 'https://formspree.io/f/mojpnyvo'
+const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xzdkqbjg'
 
 const SERVICES = [
   'Fast Track Immigration',
