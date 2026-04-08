@@ -44,7 +44,7 @@ export default function Navbar() {
         <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '28px 48px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
 
           {/* Logo → home */}
-          <Link to="/" style={{ display: 'block', lineHeight: 0 }}>
+          <Link to="/" className="nav-logo" style={{ display: 'block', lineHeight: 0 }}>
             <img
               src="/jec-logo.png"
               alt="Jet Exclusive Concierge"

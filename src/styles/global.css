@@ -222,6 +222,15 @@ input:focus, select:focus, textarea:focus {
   }
 }
 
+/* ─── Navbar logo tap feedback ──────────────────────────── */
+.nav-logo {
+  transition: opacity 0.2s ease;
+}
+.nav-logo:hover,
+.nav-logo:active {
+  opacity: 0.75;
+}
+
 /* ─── Navbar link hover ──────────────────────────────────── */
 .nav-link {
   position: relative;
