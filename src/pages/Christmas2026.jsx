@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import Footer from '../components/Footer'
 import PageMeta from '../components/PageMeta'
 
@@ -61,6 +62,7 @@ function Divider() {
 export default function Christmas2026() {
   const [videoFailed, setVideoFailed] = useState(false)
   const [time, setTime]               = useState(getTimeLeft)
+  const navigate                       = useNavigate()
 
   useEffect(() => {
     const id = setInterval(() => setTime(getTimeLeft()), 1000)
@@ -97,17 +99,6 @@ export default function Christmas2026() {
         gap: '0',
       }}>
 
-        {/* Label */}
-        <p style={{
-          fontFamily: "'Nunito Sans', system-ui, sans-serif",
-          fontSize: '11px', fontWeight: 600,
-          letterSpacing: '0.28em', textTransform: 'uppercase',
-          color: 'rgba(255,255,255,0.45)',
-          marginBottom: '28px',
-        }}>
-          Jet Exclusive Concierge
-        </p>
-
         {/* Title */}
         <h1 style={{
           fontFamily: '"Playfair Display", Georgia, serif',
@@ -143,6 +134,27 @@ export default function Christmas2026() {
           <Divider />
           <CountdownUnit value={time.seconds} label="Seconds" />
         </div>
+
+        {/* CTA */}
+        <button
+          onClick={() => navigate('/', { state: { scrollToForm: true, intent: 'christmas' } })}
+          style={{
+            marginTop: '60px',
+            backgroundColor: '#F02232',
+            color: '#FFFFFF',
+            fontFamily: "'Nunito Sans', system-ui, sans-serif",
+            fontSize: '12px',
+            fontWeight: 500,
+            letterSpacing: '0.2em',
+            textTransform: 'uppercase',
+            padding: '18px 52px',
+            border: 'none',
+            cursor: 'pointer',
+            borderRadius: 0,
+          }}
+        >
+          Join the Priority List
+        </button>
 
       </div>
 

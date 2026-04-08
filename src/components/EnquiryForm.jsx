@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 
 const FORMSPREE_ENDPOINT = 'https://formspree.io/f/mojpnyvo'
@@ -72,7 +72,12 @@ const errorStyle = {
 
 const fieldWrap = { marginBottom: '2rem' }
 
-export default function EnquiryForm() {
+const INTENT_MESSAGES = {
+  summer:   "I'd like early access to the Summer 2026 package",
+  christmas: "I'd like to be on the priority list for Christmas 2026 bookings",
+}
+
+export default function EnquiryForm({ intent }) {
   const [submitted, setSubmitted] = useState(false)
   const [submitting, setSubmitting] = useState(false)
   const [submitError, setSubmitError] = useState(false)
@@ -82,8 +87,16 @@ export default function EnquiryForm() {
     register,
     handleSubmit,
     watch,
+    setValue,
     formState: { errors },
   } = useForm()
+
+  useEffect(() => {
+    if (intent && INTENT_MESSAGES[intent]) {
+      setSelectedServices(['Other'])
+      setValue('otherService', INTENT_MESSAGES[intent])
+    }
+  }, [intent, setValue])
 
   const howHeard = watch('howHeard')
   const otherSelected = selectedServices.includes('Other')

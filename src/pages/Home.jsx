@@ -170,6 +170,8 @@ export default function Home() {
   const [videoError, setVideoError] = useState(false)
   const location                    = useLocation()
 
+  const intent = location.state?.intent
+
   useEffect(() => {
     if (location.state?.scrollToForm) {
       const el = document.getElementById('book-now')
@@ -222,7 +224,7 @@ export default function Home() {
           transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
           style={{ backgroundColor: 'rgba(46, 18, 97, 0.30)' }}
         >
-          <EnquiryForm />
+          <EnquiryForm intent={intent} />
         </motion.div>
 
         <Footer />
