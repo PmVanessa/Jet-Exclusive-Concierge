@@ -19,11 +19,11 @@ function getTimeLeft() {
 
 function CountdownUnit({ value, label }) {
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', minWidth: '80px' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', minWidth: 'clamp(52px, 14vw, 80px)' }}>
       <span style={{
         fontFamily: '"Playfair Display", Georgia, serif',
         fontWeight: 900,
-        fontSize: 'clamp(2.8rem, 7vw, 5rem)',
+        fontSize: 'clamp(2rem, 10vw, 5rem)',
         color: '#FFFFFF',
         lineHeight: 1,
         textShadow: SHADOW,
@@ -50,7 +50,7 @@ function Divider() {
   return (
     <span style={{
       fontFamily: '"Playfair Display", Georgia, serif',
-      fontSize: 'clamp(2rem, 5vw, 3.5rem)',
+      fontSize: 'clamp(1.2rem, 5vw, 3.5rem)',
       color: 'rgba(255,255,255,0.25)',
       lineHeight: 1,
       alignSelf: 'flex-start',
@@ -125,7 +125,7 @@ export default function Christmas2026() {
         </p>
 
         {/* Countdown */}
-        <div style={{ display: 'flex', alignItems: 'flex-start', gap: 'clamp(16px, 3vw, 32px)' }}>
+        <div style={{ display: 'flex', alignItems: 'flex-start', gap: 'clamp(6px, 2vw, 32px)' }}>
           <CountdownUnit value={time.days}    label="Days"    />
           <Divider />
           <CountdownUnit value={time.hours}   label="Hours"   />
