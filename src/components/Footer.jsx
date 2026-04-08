@@ -144,10 +144,10 @@ export default function Footer() {
             className="sm:block"
           >
             <a
-              href="mailto:hello@jetexclusiveconcierge.com"
+              href="mailto:jetexclusiveltd@gmail.com"
               style={{ ...micro, display: 'block', textDecoration: 'none' }}
             >
-              hello@jetexclusiveconcierge.com
+              jetexclusiveltd@gmail.com
             </a>
             <span style={{ ...micro, display: 'block' }}>Nigeria.</span>
           </div>
