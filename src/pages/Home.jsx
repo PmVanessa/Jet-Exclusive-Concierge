@@ -58,7 +58,7 @@ const SCROLL_TEXT = "First class doesn't stop at the gate."
 
 function HorizontalSection() {
   const wrapperRef = useRef(null)
-  const measureRef = useRef(null)   // lives OUTSIDE overflow:hidden — gives true width
+  const measureRef = useRef(null)
   const [textW, setTextW] = useState(0)
   const [vw,    setVw]    = useState(typeof window !== 'undefined' ? window.innerWidth : 1440)
 
@@ -68,18 +68,16 @@ function HorizontalSection() {
       setTextW(measureRef.current.offsetWidth)
       setVw(window.innerWidth)
     }
-    // Wait for Playfair Display to load so glyph widths are accurate
     ;(document.fonts?.ready ?? Promise.resolve()).then(measure)
     window.addEventListener('resize', measure)
     return () => window.removeEventListener('resize', measure)
   }, [])
 
-  const startX    = vw * 0.7                   // text begins partially visible on the right
-  const endX      = -(textW - vw * 0.05)       // last glyphs just clear the left edge
+  const startX    = vw * 0.7
+  const endX      = -(textW - vw * 0.05)
   const totalMove = Math.max(startX - endX, 1)
-  // wrapper height = scrollable distance + 1 viewport (the sticky panel itself)
-  // 1.5× gives a comfortable scroll pace
-  const wrapperH  = `${totalMove * 1.5 + vw}px`
+  // 1.1× multiplier — tight enough to feel energetic, slow enough to read
+  const wrapperH  = `${totalMove * 1.1 + vw}px`
 
   const { scrollYProgress } = useScroll({
     target: wrapperRef,
@@ -87,6 +85,16 @@ function HorizontalSection() {
   })
 
   const x = useTransform(scrollYProgress, [0, 1], [startX, endX])
+
+  // Entire section fades in on entry and out on exit — eliminates the hard-clip line
+  const sectionOpacity = useTransform(
+    scrollYProgress,
+    [0, 0.05, 0.93, 1],
+    [0,    1,    1,  0]
+  )
+
+  // Purple tint: blooms in as you enter the section
+  const bgOpacity = useTransform(scrollYProgress, [0, 0.08], [0, 1])
 
   const textStyle = {
     fontFamily: '"Playfair Display", Georgia, serif',
@@ -99,40 +107,59 @@ function HorizontalSection() {
 
   return (
     <>
-      {/* ── Hidden clone for measuring true text width ── */}
+      {/* Off-screen clone for text width measurement */}
       <div
         ref={measureRef}
         aria-hidden="true"
-        style={{
-          ...textStyle,
-          position:      'fixed',
-          top:           '-300vh',
-          left:          0,
-          visibility:    'hidden',
-          pointerEvents: 'none',
-          color:         'transparent',
-        }}
+        style={{ ...textStyle, position: 'fixed', top: '-300vh', left: 0, opacity: 0, pointerEvents: 'none' }}
       >
         {SCROLL_TEXT}
       </div>
 
-      {/* ── Scrollable wrapper ── */}
       <div ref={wrapperRef} style={{ height: textW ? wrapperH : '600vh', position: 'relative' }}>
-        <div style={{
-          position:        'sticky',
-          top:             0,
-          height:          '100vh',
-          overflow:        'hidden',
-          backgroundColor: 'rgba(46, 18, 97, 0.1)',
-          display:         'flex',
-          alignItems:      'center',
-        }}>
-          <motion.div style={{ x, willChange: 'transform', display: 'inline-block', whiteSpace: 'nowrap' }}>
+        <motion.div style={{ position: 'sticky', top: 0, height: '100vh', overflow: 'hidden', display: 'flex', alignItems: 'center', opacity: sectionOpacity }}>
+
+          {/* Purple background — fades in, matching problem→solution colour shift */}
+          <motion.div style={{
+            position: 'absolute', inset: 0,
+            backgroundColor: 'rgba(46, 18, 97, 0.18)',
+            opacity: bgOpacity,
+            pointerEvents: 'none',
+          }} />
+
+          {/* Top vignette — blends seamlessly from Section 1's dark */}
+          <div style={{
+            position: 'absolute', top: 0, left: 0, right: 0,
+            height: '28%',
+            background: 'linear-gradient(to bottom, rgba(10,10,15,0.75) 0%, transparent 100%)',
+            pointerEvents: 'none',
+            zIndex: 2,
+          }} />
+
+          {/* Bottom vignette — dissolves into the form's deep purple */}
+          <div style={{
+            position: 'absolute', bottom: 0, left: 0, right: 0,
+            height: '28%',
+            background: 'linear-gradient(to top, rgba(16,6,42,0.92) 0%, transparent 100%)',
+            pointerEvents: 'none',
+            zIndex: 2,
+          }} />
+
+          {/* Scrolling text */}
+          <motion.div style={{
+            x,
+            willChange: 'transform',
+            display:    'inline-block',
+            whiteSpace: 'nowrap',
+            position:   'relative',
+            zIndex:     1,
+          }}>
             <span style={{ ...textStyle, color: '#FFFFFF', display: 'inline' }}>
               {SCROLL_TEXT}
             </span>
           </motion.div>
-        </div>
+
+        </motion.div>
       </div>
     </>
   )
@@ -178,21 +205,25 @@ export default function Home() {
       {/* ── Content ── */}
       <div style={{ position: 'relative', zIndex: 2 }}>
 
-        {/* ── SECTION 1: Rotating problem statements — no changes ── */}
-        <section style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        {/* ── SECTION 1: Rotating problem statements ── */}
+        <section style={{ height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
           <RotatingText />
         </section>
 
         {/* ── SECTION 2: Horizontal scroll ── */}
         <HorizontalSection />
 
-        {/* ── SECTION 3: Enquiry form ── */}
-        <div
+        {/* ── SECTION 3: Enquiry form — reveals smoothly from below ── */}
+        <motion.div
           id="book-now"
-          style={{ backgroundColor: 'rgba(46, 18, 97, 0.2)' }}
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.04 }}
+          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+          style={{ backgroundColor: 'rgba(46, 18, 97, 0.30)' }}
         >
           <EnquiryForm />
-        </div>
+        </motion.div>
 
         <Footer />
       </div>

@@ -187,8 +187,8 @@ input:focus, select:focus, textarea:focus {
   min-height: 100vh;
 }
 
-/* ─── No radius anywhere ─────────────────────────────────── */
-* {
+/* ─── No radius anywhere (except .rounded which opts elements in) ── */
+*:not(.rounded) {
   border-radius: 0 !important;
 }
 
@@ -220,5 +220,50 @@ input:focus, select:focus, textarea:focus {
   .video-hero {
     object-position: center 30%;
   }
+}
+
+/* ─── Navbar link hover ──────────────────────────────────── */
+.nav-link {
+  transition: opacity 0.22s ease;
+}
+.nav-link:hover {
+  opacity: 0.55;
+}
+.nav-book {
+  transition: color 0.22s ease, opacity 0.22s ease;
+}
+.nav-book:hover {
+  opacity: 0.55;
+}
+
+/* ─── Form input focus ───────────────────────────────────── */
+.form-input:focus {
+  border-color: rgba(124, 58, 237, 0.55) !important;
+}
+.form-select:focus {
+  border-color: rgba(124, 58, 237, 0.55) !important;
+}
+
+/* ─── Scroll indicator ───────────────────────────────────── */
+.scroll-line {
+  width: 1px;
+  height: 44px;
+  position: relative;
+  background: rgba(255, 255, 255, 0.12);
+  overflow: hidden;
+}
+.scroll-line::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: 0;
+  right: 0;
+  height: 50%;
+  background: rgba(255, 255, 255, 0.7);
+  animation: scroll-drop 1.9s ease-in-out infinite;
+}
+@keyframes scroll-drop {
+  0%   { top: -50%; }
+  100% { top: 110%; }
 }
 

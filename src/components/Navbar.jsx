@@ -3,6 +3,7 @@ import { Link, useNavigate, useLocation } from 'react-router-dom'
 
 const SEASONS_ITEMS = [
   { label: 'Mo Dé, Mo Set',  to: '/modemoset'      },
+  { label: 'Summer 2026',    to: '/summer-2026'    },
   { label: 'Christmas 2026', to: '/christmas-2026' },
 ]
 
@@ -60,7 +61,7 @@ export default function Navbar() {
               onMouseEnter={() => setSeasonsDropdown(true)}
               onMouseLeave={() => setSeasonsDropdown(false)}
             >
-              <span style={linkStyle}>Seasons</span>
+              <span style={linkStyle} className="nav-link">Seasons</span>
 
               {seasonsDropdown && (
                 <div style={{
@@ -101,10 +102,10 @@ export default function Navbar() {
             </div>
 
             {/* Protocol */}
-            <Link to="/protocol" style={linkStyle}>Protocol</Link>
+            <Link to="/protocol" style={linkStyle} className="nav-link">Protocol</Link>
 
             {/* Book Now — scroll to form */}
-            <button onClick={handleBookNow} style={{ ...linkStyle, background: 'none', border: 'none', padding: 0 }}>
+            <button onClick={handleBookNow} style={{ ...linkStyle, background: 'none', border: 'none', padding: 0 }} className="nav-book">
               Book Now
             </button>
           </div>

@@ -36,9 +36,9 @@ const NIGERIAN_STATES = [
 // ── Shared style tokens ──
 const inputBase = {
   width: '100%',
-  backgroundColor: '#0a0a0f',
+  backgroundColor: 'rgba(8, 4, 22, 0.72)',
   color: '#FFFFFF',
-  border: '1px solid rgba(160, 160, 176, 0.35)',
+  border: '1px solid rgba(255, 255, 255, 0.12)',
   fontFamily: "'Nunito Sans', system-ui, sans-serif",
   fontSize: '18px',
   fontWeight: 500,
@@ -48,6 +48,7 @@ const inputBase = {
   borderRadius: 0,
   appearance: 'none',
   WebkitAppearance: 'none',
+  transition: 'border-color 0.2s ease',
 }
 
 const labelStyle = {
@@ -194,7 +195,7 @@ export default function EnquiryForm() {
                 textShadow: '0 2px 20px rgba(0,0,0,0.8), 0 0 40px rgba(0,0,0,0.5)',
               }}
             >
-              Tell us what you need and we will take it from here.
+              Leave the rest to us.
             </p>
 
             {/* ── Form ── */}
@@ -205,7 +206,8 @@ export default function EnquiryForm() {
                 <label style={labelStyle}>Full Name *</label>
                 <input
                   type="text"
-                  style={{ ...inputBase, borderColor: errors.fullName ? '#F02232' : 'rgba(160,160,176,0.35)' }}
+                  className="form-input"
+                  style={{ ...inputBase, border: `1px solid ${errors.fullName ? '#F02232' : 'rgba(255,255,255,0.12)'}` }}
                   {...register('fullName', { required: 'Full name is required' })}
                 />
                 {errors.fullName && <span style={errorStyle}>{errors.fullName.message}</span>}
@@ -216,7 +218,8 @@ export default function EnquiryForm() {
                 <label style={labelStyle}>Email *</label>
                 <input
                   type="email"
-                  style={{ ...inputBase, borderColor: errors.email ? '#F02232' : 'rgba(160,160,176,0.35)' }}
+                  className="form-input"
+                  style={{ ...inputBase, border: `1px solid ${errors.email ? '#F02232' : 'rgba(255,255,255,0.12)'}` }}
                   {...register('email', {
                     required: 'Email is required',
                     pattern: { value: /\S+@\S+\.\S+/, message: 'Enter a valid email address' },
@@ -230,7 +233,8 @@ export default function EnquiryForm() {
                 <label style={labelStyle}>Phone Number *</label>
                 <input
                   type="tel"
-                  style={{ ...inputBase, borderColor: errors.phone ? '#F02232' : 'rgba(160,160,176,0.35)' }}
+                  className="form-input"
+                  style={{ ...inputBase, border: `1px solid ${errors.phone ? '#F02232' : 'rgba(255,255,255,0.12)'}` }}
                   {...register('phone', { required: 'Phone number is required' })}
                 />
                 {errors.phone && <span style={errorStyle}>{errors.phone.message}</span>}
@@ -241,6 +245,7 @@ export default function EnquiryForm() {
                 <label style={labelStyle}>Where Do You Need Us</label>
                 <div style={{ position: 'relative' }}>
                   <select
+                    className="form-select"
                     style={{ ...inputBase, cursor: 'pointer', paddingRight: '36px' }}
                     defaultValue=""
                     {...register('location')}
@@ -263,6 +268,7 @@ export default function EnquiryForm() {
                   <label style={labelStyle}>Arrival Date</label>
                   <input
                     type="date"
+                    className="form-input"
                     style={{ ...inputBase, colorScheme: 'dark' }}
                     {...register('arrivalDate')}
                   />
@@ -271,6 +277,7 @@ export default function EnquiryForm() {
                   <label style={labelStyle}>Departure Date</label>
                   <input
                     type="date"
+                    className="form-input"
                     style={{ ...inputBase, colorScheme: 'dark' }}
                     {...register('departureDate')}
                   />
@@ -343,6 +350,7 @@ export default function EnquiryForm() {
                 <label style={labelStyle}>How Did You Hear About Us</label>
                 <div style={{ position: 'relative' }}>
                   <select
+                    className="form-select"
                     style={{ ...inputBase, cursor: 'pointer', paddingRight: '36px' }}
                     defaultValue=""
                     {...register('howHeard')}

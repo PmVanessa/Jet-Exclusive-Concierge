@@ -3,7 +3,7 @@ import Footer from '../components/Footer'
 import PageMeta from '../components/PageMeta'
 
 const SHADOW = '0 2px 20px rgba(0,0,0,0.8), 0 0 40px rgba(0,0,0,0.5)'
-const TARGET  = new Date('2026-07-01T00:00:00')
+const TARGET  = new Date('2026-06-21T00:00:00')
 
 function getTimeLeft() {
   const diff = TARGET - new Date()
@@ -32,10 +32,8 @@ function CountdownUnit({ value, label }) {
       </span>
       <span style={{
         fontFamily: "'Nunito Sans', system-ui, sans-serif",
-        fontSize: '10px',
-        fontWeight: 600,
-        letterSpacing: '0.22em',
-        textTransform: 'uppercase',
+        fontSize: '10px', fontWeight: 600,
+        letterSpacing: '0.22em', textTransform: 'uppercase',
         color: 'rgba(255,255,255,0.5)',
         marginTop: '10px',
       }}>
@@ -58,7 +56,7 @@ function Divider() {
   )
 }
 
-export default function Christmas2026() {
+export default function Summer2026() {
   const [videoFailed, setVideoFailed] = useState(false)
   const [time, setTime]               = useState(getTimeLeft)
 
@@ -70,21 +68,21 @@ export default function Christmas2026() {
   return (
     <>
       <PageMeta
-        title="Christmas 2026 | Jet Exclusive Concierge"
-        description="Executive mobility for the festive season. Bookings open July 1, 2026."
+        title="Summer 2026 | Jet Exclusive Concierge"
+        description="Executive mobility for the summer season. Coming June 2026."
       />
 
       {!videoFailed && (
         <video autoPlay muted loop playsInline onError={() => setVideoFailed(true)}
           style={{ position: 'fixed', inset: 0, width: '100%', height: '100%', objectFit: 'cover', zIndex: 0 }}
         >
-          <source src="/jec-christmas-video.mp4" type="video/mp4" />
+          <source src="/jec-hero-video.mp4" type="video/mp4" />
         </video>
       )}
 
       <div style={{
         position: 'fixed', inset: 0,
-        backgroundColor: videoFailed ? '#0a0a0f' : 'rgba(10,10,15,0.65)',
+        backgroundColor: videoFailed ? '#0a0a0f' : 'rgba(10,10,15,0.62)',
         zIndex: 1,
       }} />
 
@@ -94,7 +92,6 @@ export default function Christmas2026() {
         display: 'flex', flexDirection: 'column',
         alignItems: 'center', justifyContent: 'center',
         textAlign: 'center', padding: '120px 24px 80px',
-        gap: '0',
       }}>
 
         {/* Label */}
@@ -118,7 +115,7 @@ export default function Christmas2026() {
           textShadow: SHADOW,
           marginBottom: '20px',
         }}>
-          Christmas 2026
+          Summer 2026
         </h1>
 
         {/* Subline */}
@@ -130,7 +127,7 @@ export default function Christmas2026() {
           marginBottom: '72px',
           textShadow: SHADOW,
         }}>
-          Bookings open July 1
+          Coming June 2026
         </p>
 
         {/* Countdown */}
