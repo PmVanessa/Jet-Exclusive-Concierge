@@ -22,6 +22,74 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:opsz,wght@6..12,400;6..12,500;6..12,600&family=Playfair+Display:ital,wght@0,700;0,900;1,700;1,900&display=swap" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "https://jetexclusiveconcierge.com/#organization",
+          "name": "Jet Exclusive Concierge",
+          "alternateName": "JEC",
+          "url": "https://jetexclusiveconcierge.com",
+          "logo": "https://jetexclusiveconcierge.com/jec-logo.png",
+          "contactPoint": {
+            "@type": "ContactPoint",
+            "email": "jetexclusiveltd@gmail.com",
+            "contactType": "customer service",
+            "areaServed": "NG",
+            "availableLanguage": "English"
+          },
+          "areaServed": [
+            {
+              "@type": "City",
+              "name": "Lagos",
+              "containedInPlace": { "@type": "Country", "name": "Nigeria" }
+            },
+            {
+              "@type": "City",
+              "name": "Abuja",
+              "containedInPlace": { "@type": "Country", "name": "Nigeria" }
+            }
+          ],
+          "description": "Jet Exclusive Concierge is a VVIP airport concierge service in Nigeria offering fast track immigration, meet and greet, private transfers, and protocol services at Murtala Muhammed International Airport (LOS) in Lagos and Nnamdi Azikiwe International Airport (ABV) in Abuja."
+        },
+        {
+          "@type": "Service",
+          "@id": "https://jetexclusiveconcierge.com/#service",
+          "name": "VIP Airport Concierge Service",
+          "provider": { "@id": "https://jetexclusiveconcierge.com/#organization" },
+          "serviceType": "Airport Concierge",
+          "description": "VVIP airport concierge covering fast track immigration, meet and greet, tarmac access, private transfers, protocol officer assignment, and door-to-door service for diaspora travellers and executives flying through Lagos and Abuja.",
+          "areaServed": ["Lagos, Nigeria", "Abuja, Nigeria"],
+          "availableChannel": {
+            "@type": "ServiceChannel",
+            "serviceUrl": "https://jetexclusiveconcierge.com"
+          },
+          "hasOfferCatalog": {
+            "@type": "OfferCatalog",
+            "name": "JEC Services",
+            "itemListElement": [
+              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Fast Track Immigration" } },
+              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Meet and Greet" } },
+              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Private Airport Transfer" } },
+              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Protocol Officer" } },
+              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Tarmac Access" } },
+              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Departure Assistance" } },
+              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Arrival Assistance" } }
+            ]
+          }
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://jetexclusiveconcierge.com/#website",
+          "url": "https://jetexclusiveconcierge.com",
+          "name": "Jet Exclusive Concierge",
+          "publisher": { "@id": "https://jetexclusiveconcierge.com/#organization" }
+        }
+      ]
+    }
+    </script>
   </head>
   <body>
     <div id="root"></div>
