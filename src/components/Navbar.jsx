@@ -61,7 +61,12 @@ export default function Navbar() {
               onMouseEnter={() => setSeasonsDropdown(true)}
               onMouseLeave={() => setSeasonsDropdown(false)}
             >
-              <span style={linkStyle} className="nav-link">Seasons</span>
+              <button
+                type="button"
+                style={{ ...linkStyle, background: 'none', border: 'none', padding: 0 }}
+                className="nav-link"
+                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') setSeasonsDropdown(!seasonsDropdown) }}
+              >Seasons</button>
 
               {seasonsDropdown && (
                 <div style={{
@@ -137,12 +142,14 @@ export default function Navbar() {
         >
           {/* Seasons collapsible */}
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '20px' }}>
-            <span
+            <button
+              type="button"
               onClick={() => setSeasonsOpen(!seasonsOpen)}
-              style={{ ...linkStyle, fontSize: '13px', letterSpacing: '0.22em' }}
+              style={{ ...linkStyle, fontSize: '13px', letterSpacing: '0.22em', background: 'none', border: 'none', padding: 0 }}
+              aria-expanded={seasonsOpen}
             >
               Seasons {seasonsOpen ? '−' : '+'}
-            </span>
+            </button>
             {seasonsOpen && SEASONS_ITEMS.map(({ label, to }) => (
               <Link
                 key={label}

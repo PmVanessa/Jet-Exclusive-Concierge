@@ -149,6 +149,14 @@ export default function Footer() {
             >
               jetexclusiveltd@gmail.com
             </a>
+            <a
+              href="https://wa.me/2348055535532"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ ...micro, display: 'block', textDecoration: 'none' }}
+            >
+              +234 805 553 5532
+            </a>
             <span style={{ ...micro, display: 'block' }}>Nigeria.</span>
           </div>
 

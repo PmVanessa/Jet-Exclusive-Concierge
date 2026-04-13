@@ -106,10 +106,6 @@ export default function MoDeMoSet() {
   const [videoError, setVideoError] = useState(false)
   const navigate = useNavigate()
 
-  const handlePlanArrival = () => {
-    navigate('/', { state: { scrollToForm: true } })
-  }
-
   return (
     <>
       <PageMeta

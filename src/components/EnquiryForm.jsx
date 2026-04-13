@@ -43,7 +43,6 @@ const inputBase = {
   fontSize: '18px',
   fontWeight: 500,
   padding: '14px 16px',
-  outline: 'none',
   boxSizing: 'border-box',
   borderRadius: 0,
   appearance: 'none',
@@ -216,8 +215,9 @@ export default function EnquiryForm({ intent }) {
 
               {/* Full name */}
               <div style={fieldWrap}>
-                <label style={labelStyle}>Full Name *</label>
+                <label htmlFor="fullName" style={labelStyle}>Full Name *</label>
                 <input
+                  id="fullName"
                   type="text"
                   className="form-input"
                   style={{ ...inputBase, border: `1px solid ${errors.fullName ? '#F02232' : 'rgba(255,255,255,0.12)'}` }}
@@ -228,8 +228,9 @@ export default function EnquiryForm({ intent }) {
 
               {/* Email */}
               <div style={fieldWrap}>
-                <label style={labelStyle}>Email *</label>
+                <label htmlFor="email" style={labelStyle}>Email *</label>
                 <input
+                  id="email"
                   type="email"
                   className="form-input"
                   style={{ ...inputBase, border: `1px solid ${errors.email ? '#F02232' : 'rgba(255,255,255,0.12)'}` }}
@@ -243,8 +244,9 @@ export default function EnquiryForm({ intent }) {
 
               {/* Phone */}
               <div style={fieldWrap}>
-                <label style={labelStyle}>Phone Number *</label>
+                <label htmlFor="phone" style={labelStyle}>Phone Number *</label>
                 <input
+                  id="phone"
                   type="tel"
                   className="form-input"
                   style={{ ...inputBase, border: `1px solid ${errors.phone ? '#F02232' : 'rgba(255,255,255,0.12)'}` }}
@@ -255,9 +257,10 @@ export default function EnquiryForm({ intent }) {
 
               {/* Where do you need us — all 36 states + FCT */}
               <div style={fieldWrap}>
-                <label style={labelStyle}>Where Do You Need Us</label>
+                <label htmlFor="location" style={labelStyle}>Where Do You Need Us</label>
                 <div style={{ position: 'relative' }}>
                   <select
+                    id="location"
                     className="form-select"
                     style={{ ...inputBase, cursor: 'pointer', paddingRight: '36px' }}
                     defaultValue=""
@@ -278,8 +281,9 @@ export default function EnquiryForm({ intent }) {
               {/* Dates row */}
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', marginBottom: '2rem' }}>
                 <div>
-                  <label style={labelStyle}>Arrival Date</label>
+                  <label htmlFor="arrivalDate" style={labelStyle}>Arrival Date</label>
                   <input
+                    id="arrivalDate"
                     type="date"
                     className="form-input"
                     style={{ ...inputBase, colorScheme: 'dark' }}
@@ -287,8 +291,9 @@ export default function EnquiryForm({ intent }) {
                   />
                 </div>
                 <div>
-                  <label style={labelStyle}>Departure Date</label>
+                  <label htmlFor="departureDate" style={labelStyle}>Departure Date</label>
                   <input
+                    id="departureDate"
                     type="date"
                     className="form-input"
                     style={{ ...inputBase, colorScheme: 'dark' }}
@@ -360,9 +365,10 @@ export default function EnquiryForm({ intent }) {
 
               {/* How did you hear */}
               <div style={fieldWrap}>
-                <label style={labelStyle}>How Did You Hear About Us</label>
+                <label htmlFor="howHeard" style={labelStyle}>How Did You Hear About Us</label>
                 <div style={{ position: 'relative' }}>
                   <select
+                    id="howHeard"
                     className="form-select"
                     style={{ ...inputBase, cursor: 'pointer', paddingRight: '36px' }}
                     defaultValue=""
@@ -382,8 +388,9 @@ export default function EnquiryForm({ intent }) {
                 {/* Conditional: friend name */}
                 {howHeard === 'A friend' && (
                   <div style={{ marginTop: '16px' }}>
-                    <label style={labelStyle}>What Is Your Friend's Name</label>
+                    <label htmlFor="friendName" style={labelStyle}>What Is Your Friend&apos;s Name</label>
                     <input
+                      id="friendName"
                       type="text"
                       style={inputBase}
                       {...register('friendName')}

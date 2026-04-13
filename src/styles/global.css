@@ -135,11 +135,11 @@ body {
 /* ─── Form element resets (all sharp edges) ──────────────── */
 input, select, textarea, button {
   border-radius: 0 !important;
-  outline: none;
 }
 
 input:focus, select:focus, textarea:focus {
-  outline: none;
+  outline: 1px solid rgba(255, 255, 255, 0.4);
+  outline-offset: 2px;
 }
 
 /* ─── Selection colour ───────────────────────────────────── */

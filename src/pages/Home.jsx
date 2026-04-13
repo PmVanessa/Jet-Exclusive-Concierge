@@ -68,7 +68,7 @@ function HorizontalSection() {
       setTextW(measureRef.current.offsetWidth)
       setVw(window.innerWidth)
     }
-    ;(document.fonts?.ready ?? Promise.resolve()).then(measure)
+    void (document.fonts?.ready ?? Promise.resolve()).then(measure)
     window.addEventListener('resize', measure)
     return () => window.removeEventListener('resize', measure)
   }, [])

@@ -44,7 +44,7 @@ npm run preview
 
 1. Go to [formspree.io](https://formspree.io) and create a free account.
 2. Create a new form and copy your **form ID** (looks like `xabc1234`).
-3. Open `src/pages/Contact.jsx`.
+3. Open `src/components/EnquiryForm.jsx`.
 4. Find this line near the top:
 
 ```js
@@ -67,7 +67,9 @@ The site uses three Pexels videos served as direct MP4 files:
 |------|----------|---------------|
 | Home (`/`) | `VIDEO_SRC` in `src/pages/Home.jsx` | Luxury car arriving at night |
 | Protocol (`/protocol`) | `VIDEO_SRC` in `src/pages/Protocol.jsx` | Car driving at night |
-| Contact (`/contact`) | `VIDEO_SRC` in `src/pages/Contact.jsx` | Lagos sunset skyline |
+| Mo Dé, Mo Set (`/modemoset`) | `VIDEO_SRC` in `src/pages/MoDeMoSet.jsx` | — |
+| Summer 2026 (`/summer-2026`) | `VIDEO_SRC` in `src/pages/Summer2026.jsx` | — |
+| Christmas 2026 (`/christmas-2026`) | `VIDEO_SRC` in `src/pages/Christmas2026.jsx` | — |
 
 To update a video:
 1. Download or locate an MP4 direct URL.
@@ -100,7 +102,7 @@ vercel --prod
 4. Vercel auto-detects Vite. Leave all settings as defaults.
 5. Click **Deploy**.
 
-The `vercel.json` file already contains the SPA rewrite rule so all client-side routes (`/protocol`, `/standard`, `/contact`) work correctly on Vercel.
+The `vercel.json` file already contains the SPA rewrite rule so all client-side routes (`/protocol`, `/modemoset`, `/summer-2026`, `/christmas-2026`) work correctly on Vercel.
 
 ---
 
