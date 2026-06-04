@@ -71,6 +71,39 @@ The site uses three Pexels videos served as direct MP4 files:
 | Summer 2026 (`/summer-2026`) | `VIDEO_SRC` in `src/pages/Summer2026.jsx` | — |
 | Christmas 2026 (`/christmas-2026`) | `VIDEO_SRC` in `src/pages/Christmas2026.jsx` | — |
 
+---
+
+## Pricing Section
+
+The pricing section lives on the **homepage** (`src/pages/Home.jsx`) as the `PricingSection` component, rendered between the horizontal scroll section and the enquiry form.
+
+Rates are defined in the `VEHICLES` array near the top of the pricing component:
+
+```js
+const VEHICLES = [
+  {
+    name: 'Toyota Prado',
+    tag: 'The Reliable Choice',
+    withinCity: '₦190,000',
+    intercity: '₦270,000',
+  },
+  {
+    name: 'Lexus GX460',
+    tag: 'The Premium Choice',
+    withinCity: '₦220,000',
+    intercity: '₦330,000',
+    featured: true,
+  },
+]
+```
+
+To update rates, edit those values directly. All prices are displayed as **"starting from"** — the section makes clear that final pricing is bespoke.
+
+The section is anchored at `id="pricing"` and is reachable via:
+- The **Pricing** link in the navbar (desktop + mobile)
+- The **Pricing** link in the footer
+- Clicking **"Enquire for a custom quote"** CTA scrolls to the enquiry form
+
 To update a video:
 1. Download or locate an MP4 direct URL.
 2. Replace the `VIDEO_SRC` constant at the top of the relevant page file.
