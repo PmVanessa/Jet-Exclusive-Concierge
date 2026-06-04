@@ -37,6 +37,15 @@ export default function Navbar() {
     }
   }
 
+  const handlePricing = () => {
+    setMenuOpen(false)
+    if (location.pathname === '/') {
+      document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' })
+    } else {
+      navigate('/', { state: { scrollToPricing: true } })
+    }
+  }
+
   return (
     <>
       {/* ── Fixed nav bar ── */}
@@ -109,6 +118,14 @@ export default function Navbar() {
             {/* Protocol */}
             <Link to="/protocol" style={linkStyle} className="nav-link">Protocol</Link>
 
+            {/* Pricing */}
+            <button
+              type="button"
+              onClick={handlePricing}
+              style={{ ...linkStyle, background: 'none', border: 'none', padding: 0 }}
+              className="nav-link"
+            >Pricing</button>
+
             {/* Book Now — CTA */}
             <button onClick={handleBookNow} className="nav-cta">
               Book Now
@@ -170,6 +187,15 @@ export default function Navbar() {
           >
             Protocol
           </Link>
+
+          {/* Pricing */}
+          <button
+            type="button"
+            onClick={handlePricing}
+            style={{ ...linkStyle, fontSize: '13px', letterSpacing: '0.22em', background: 'none', border: 'none', padding: 0 }}
+          >
+            Pricing
+          </button>
 
           {/* Book Now */}
           <button onClick={handleBookNow} className="nav-cta">
